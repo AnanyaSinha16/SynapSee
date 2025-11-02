@@ -59,4 +59,4 @@ B) Poppler (pdftoppm) conversion support is integrated (server tries pdftoppm if
 C) This entire project is packed in a ZIP you can download (camera-ocr-chatbot.zip).  
 D) Dockerfiles + docker-compose included.
 
-Enjoy — run locally and test upload -> OCR -> AI reply flow.
+Enjoy —> run locally and test upload -> OCR -> AI reply flow.
