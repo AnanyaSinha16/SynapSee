@@ -24,7 +24,7 @@ npm run dev
 cd frontend
 npm install
 npm run dev
-# open http://localhost:5173
+
 ```
 
 ## Docker (recommended for simple deploy)
@@ -32,7 +32,7 @@ Make sure to set environment variables in your shell or a .env file, then:
 ```bash
 docker-compose up --build
 ```
-This will build backend and frontend containers. Frontend will be available at http://localhost:5173 and backend at http://localhost:4000
+This will build backend and frontend containers. 
 
 ## Gemini (Google) setup notes
 Google Generative Models API requires OAuth 2.0 access token. Two common approaches:
