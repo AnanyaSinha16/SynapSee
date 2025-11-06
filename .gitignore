@@ -1,24 +1,85 @@
-# Node modules (ignore for all subfolders)
+# ===================================================
+# 🔒 General Ignore Rules
+# ===================================================
 node_modules/
 **/node_modules/
-
-# Build and cache files
 dist/
 build/
 .vite/
 **/.vite/
+.cache/
+tmp/
+temp/
 
-# Environment files
+# ===================================================
+# ⚙️ Environment Files
+# ===================================================
 .env
-**/.env
+.env.*
+!.env.example
 
-# Log files
+# ===================================================
+# 🧰 Log Files
+# ===================================================
 npm-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+logs/
+*.log
 
-# OS/Editor files
+# ===================================================
+# 💻 System & Editor Files
+# ===================================================
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+*.swp
+
+# ===================================================
+# 🐳 Docker
+# ===================================================
+# Ignore Docker build artifacts
+**/Dockerfile
+**/docker-compose.override.yml
+**/docker-compose.local.yml
+**/.docker/
+
+# ===================================================
+# 🧪 Test Coverage & Reports
+# ===================================================
+coverage/
+*.lcov
+*.spec.js
+*.test.js
+
+# ===================================================
+# 📦 Dependencies & Lock Files (optional)
+# ===================================================
+# You can ignore lock files if using CI/CD dependency installs
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ===================================================
+# ⚡ Vite / Tailwind Cache
+# ===================================================
+*.vite
+tailwind.config.backup.js
+
+# ===================================================
+# 🖼️ Build Artifacts & Static Exports
+# ===================================================
+*.out/
+frontend/.next/
+frontend/out/
+backend/out/
+
+# ===================================================
+# 🧩 Misc
+# ===================================================
+*.zip
+*.tar
+*.gz
+*.bak
+*.tmp
