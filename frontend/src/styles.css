@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
-/* Global styles (Tailwind v4 syntax) */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --color-background: #111827;
-  --color-text: #ffffff;
+  --color-bg: theme('colors.gray.900');
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: white;
+  font-family: sans-serif;
 }
