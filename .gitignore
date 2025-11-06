@@ -1,0 +1,24 @@
+# Node modules (ignore for all subfolders)
+node_modules/
+**/node_modules/
+
+# Build and cache files
+dist/
+build/
+.vite/
+**/.vite/
+
+# Environment files
+.env
+**/.env
+
+# Log files
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS/Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
