@@ -1,10 +1,14 @@
-# Camera-OCR-Chatbot (Full Package)
+# 📸 SynapSee – Camera OCR Chatbot
 
-This package includes:
-- Backend (Node.js + Express) with OCR and multi-AI support (OpenAI, Gemini template, Ollama)
-- Frontend (React + Vite) with Upload/Drag&Drop and optional camera
-- Dockerfiles and docker-compose for easy deployment
-- PDF -> image conversion support using `pdftoppm` (poppler) if installed on the host
+An intelligent web app that extracts text from images (OCR) and interacts using AI responses.  
+Built with **React**, **Tailwind CSS**, **Node.js**, **Express**, and **MongoDB**.
+
+## 🚀 Current Progress
+✅ Animated Login / Signup  
+✅ Smooth Navbar & Page Transitions  
+✅ Backend Auth with JWT  
+🧠 Next: Connect OCR & Chatbot Integration  
+
 
 ## Quick start (development)
 
