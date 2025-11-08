@@ -1,53 +1,58 @@
 import React, { useState } from "react";
-import API from "../api/api";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/login", formData);
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      alert(`Welcome back, ${res.data.user.username}!`);
-      window.location.href = "/home";
+      toast.success("Login successful!");
+      navigate("/home");
     } catch (err) {
-      alert(`❌ ${err.response?.data?.message || "Invalid credentials"}`);
+      console.error(err);
+      toast.error(err.response?.data?.message || "Invalid credentials");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-purple-800 via-black to-fuchsia-900 text-white">
-      <h1 className="text-3xl font-bold mb-4">Login</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col w-64 gap-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-purple-900 to-black text-white">
+      <h1 className="text-4xl font-bold mb-6">Login</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
         <input
           type="email"
-          name="email"
           placeholder="Email"
-          onChange={handleChange}
-          className="p-2 rounded text-black"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="px-4 py-2 rounded bg-gray-800 text-white"
+          required
         />
         <input
           type="password"
-          name="password"
           placeholder="Password"
-          onChange={handleChange}
-          className="p-2 rounded text-black"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="px-4 py-2 rounded bg-gray-800 text-white"
+          required
         />
         <button
           type="submit"
-          className="bg-fuchsia-600 hover:bg-fuchsia-700 transition p-2 rounded"
+          className="bg-pink-600 hover:bg-pink-700 py-2 rounded text-white"
         >
           Login
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default Login;
