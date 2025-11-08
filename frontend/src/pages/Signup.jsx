@@ -1,16 +1,14 @@
-import API from "../api/api";
+import React from "react";
 
-const handleSubmit = async (ev) => {
-  ev.preventDefault();
-  if (!validate()) return;
-
-  try {
-    const res = await API.post("/auth/register", formData);
-
-    alert("✅ Registration successful!");
-    localStorage.setItem("user", JSON.stringify(res.data.user)); // save user info
-    window.location.href = "/home"; // redirect to home
-  } catch (err) {
-    alert(`❌ ${err.response?.data?.message || "Something went wrong"}`);
-  }
+const Signup = () => {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-purple-900 to-black text-white">
+      <h1 className="text-4xl font-bold mb-6">Signup</h1>
+      <button className="bg-pink-600 hover:bg-pink-700 px-6 py-3 rounded-lg">
+        Create Account
+      </button>
+    </div>
+  );
 };
+
+export default Signup;

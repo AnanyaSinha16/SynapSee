@@ -1,42 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import About from "./pages/About";
+import Signup from "./pages/Signup";
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
+import About from "./pages/About";
 
-const PageTransition = ({ children }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.6, ease: "easeInOut" }}
-  >
-    {children}
-  </motion.div>
-);
-
-const AnimatedRoutes = () => {
-  const location = useLocation();
-  return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-        <Route path="/home" element={<PageTransition><Home /></PageTransition>} />
-      </Routes>
-    </AnimatePresence>
-  );
-};
-
-const App = () => {
+function App() {
   return (
     <Router>
-      <Navbar />
-      <AnimatedRoutes />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;
