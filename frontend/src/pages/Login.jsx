@@ -30,20 +30,20 @@ const Login = () => {
             color: { value: ["#00ffff", "#b026ff"] },
             links: {
               color: "#00ffff",
-              distance: 130,
+              distance: 120,
               enable: true,
               opacity: 0.2,
               width: 0.6,
             },
-            move: { enable: true, speed: 0.5 },
-            number: { value: 45 },
-            opacity: { value: 0.35 },
+            move: { enable: true, speed: 0.6 },
+            number: { value: window.innerWidth < 640 ? 25 : 60 }, // ⚙️ fewer particles on mobile
+            opacity: { value: 0.3 },
             shape: { type: "circle" },
             size: { value: { min: 1, max: 3 } },
           },
           interactivity: {
             events: { onHover: { enable: true, mode: "repulse" }, resize: true },
-            modes: { repulse: { distance: 120, duration: 0.4 } },
+            modes: { repulse: { distance: 100, duration: 0.4 } },
           },
           detectRetina: true,
         }}
@@ -71,6 +71,7 @@ const Login = () => {
           scale: 1.02,
         }}
       >
+        {/* ✨ Title */}
         <motion.h2
           className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00ffff] to-[#b026ff] mb-6 sm:mb-8 tracking-wide"
           initial={{ opacity: 0, y: 20 }}
@@ -80,17 +81,23 @@ const Login = () => {
           Login
         </motion.h2>
 
-        {/* Form */}
-        <form className="flex flex-col space-y-4 sm:space-y-5">
+        {/* 💫 Form */}
+        <form
+          className="flex flex-col space-y-4 sm:space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            alert("Login functionality will connect to backend soon!");
+          }}
+        >
           <input
             type="email"
             placeholder="Email"
-            className="p-3 sm:p-4 rounded-md bg-[#0f0f1a]/60 text-white border border-[#00ffff44] focus:ring-2 focus:ring-[#00ffffaa] outline-none transition-all duration-300 text-sm sm:text-base"
+            className="p-3 sm:p-4 rounded-md bg-[#0f0f1a]/60 text-white border border-[#00ffff44] focus:ring-2 focus:ring-[#00ffffaa] outline-none transition-all duration-300 text-sm sm:text-base placeholder-gray-400"
           />
           <input
             type="password"
             placeholder="Password"
-            className="p-3 sm:p-4 rounded-md bg-[#0f0f1a]/60 text-white border border-[#00ffff44] focus:ring-2 focus:ring-[#00ffffaa] outline-none transition-all duration-300 text-sm sm:text-base"
+            className="p-3 sm:p-4 rounded-md bg-[#0f0f1a]/60 text-white border border-[#00ffff44] focus:ring-2 focus:ring-[#00ffffaa] outline-none transition-all duration-300 text-sm sm:text-base placeholder-gray-400"
           />
           <motion.button
             type="submit"
@@ -102,10 +109,13 @@ const Login = () => {
           </motion.button>
         </form>
 
-        {/* Sign up link */}
+        {/* 💬 Sign up link */}
         <p className="text-gray-300 text-xs sm:text-sm text-center mt-5 sm:mt-6">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-[#00ffff] hover:underline">
+          <Link
+            to="/signup"
+            className="text-[#00ffff] hover:underline hover:text-[#b026ff] transition-colors duration-300"
+          >
             Sign up
           </Link>
         </p>

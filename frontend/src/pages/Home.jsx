@@ -1,59 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
 
 const Home = () => {
-  const particlesInit = async (main) => {
-    await loadFull(main);
-  };
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
 
   return (
     <motion.div
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white px-4 sm:px-0"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* 🌌 Floating teal–purple particles */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        className="absolute inset-0 z-0"
-        options={{
-          fullScreen: { enable: false },
-          fpsLimit: 60,
-          particles: {
-            color: { value: ["#00ffff", "#b026ff"] },
-            links: {
-              color: "#00ffff",
-              distance: 120,
-              enable: true,
-              opacity: 0.15,
-              width: 0.6,
-            },
-            move: { enable: true, speed: 0.4 },
-            number: { value: 35 },
-            opacity: { value: 0.35 },
-            shape: { type: "circle" },
-            size: { value: { min: 1, max: 2 } },
-          },
-          interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" }, resize: true },
-            modes: { repulse: { distance: 100, duration: 0.4 } },
-          },
-          detectRetina: true,
+      {/* 🌌 Cursor Glow */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-0"
+        animate={{
+          background: `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,255,255,0.15), transparent 70%)`,
         }}
+        transition={{ type: "tween", ease: "backOut", duration: 0.4 }}
       />
 
-      {/* ✨ Floating glow background */}
+      {/* ✨ Floating Teal–Purple Glow */}
       <motion.div
         className="absolute inset-0"
         animate={{
           background: [
-            "radial-gradient(circle at 20% 30%, rgba(0,255,255,0.12), transparent 60%)",
-            "radial-gradient(circle at 80% 70%, rgba(176,38,255,0.12), transparent 60%)",
+            "radial-gradient(circle at 20% 30%, rgba(0,255,255,0.1), transparent 60%)",
+            "radial-gradient(circle at 80% 70%, rgba(176,38,255,0.1), transparent 60%)",
           ],
         }}
         transition={{
@@ -64,9 +44,9 @@ const Home = () => {
         }}
       />
 
-      {/* 🪩 Title */}
+      {/* 🪩 Welcome Text */}
       <motion.h1
-        className="text-3xl sm:text-5xl font-extrabold mb-6 sm:mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide text-center relative z-10"
+        className="text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 1 }}
@@ -76,7 +56,7 @@ const Home = () => {
 
       {/* 💬 Subtitle */}
       <motion.p
-        className="text-gray-300 text-base sm:text-lg mb-10 sm:mb-12 max-w-md sm:max-w-lg text-center leading-relaxed relative z-10"
+        className="text-gray-300 text-lg mb-12 max-w-lg text-center leading-relaxed"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 1 }}
@@ -84,35 +64,27 @@ const Home = () => {
         Your intelligent vision companion — where AI meets simplicity.
       </motion.p>
 
-      {/* 💠 Cards */}
+      {/* 💠 Animated Glass Cards */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 z-10 w-full max-w-3xl"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-6 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
       >
         <motion.div
-          whileHover={{ scale: 1.03 }}
-          className="bg-white/10 backdrop-blur-lg border border-teal-400/20 p-5 sm:p-6 rounded-2xl shadow-[0_0_25px_#00ffff22] transition-all duration-500 text-center sm:text-left"
+          whileHover={{ scale: 1.05 }}
+          className="bg-white/10 backdrop-blur-lg border border-teal-400/20 p-6 rounded-2xl shadow-[0_0_25px_#00ffff22] transition-all duration-500"
         >
-          <h3 className="text-lg sm:text-xl font-semibold text-[#00ffff] mb-2">
-            Recent Activity
-          </h3>
-          <p className="text-gray-300 text-sm sm:text-base">
-            View your recent OCR scans and AI responses here.
-          </p>
+          <h3 className="text-xl font-semibold text-[#00ffff] mb-2">Recent Activity</h3>
+          <p className="text-gray-300 text-sm">View your recent OCR scans and AI responses here.</p>
         </motion.div>
 
         <motion.div
-          whileHover={{ scale: 1.03 }}
-          className="bg-white/10 backdrop-blur-lg border border-purple-500/20 p-5 sm:p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] transition-all duration-500 text-center sm:text-left"
+          whileHover={{ scale: 1.05 }}
+          className="bg-white/10 backdrop-blur-lg border border-purple-500/20 p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] transition-all duration-500"
         >
-          <h3 className="text-lg sm:text-xl font-semibold text-[#b026ff] mb-2">
-            Quick Start
-          </h3>
-          <p className="text-gray-300 text-sm sm:text-base">
-            Capture, extract, and understand — all from your dashboard.
-          </p>
+          <h3 className="text-xl font-semibold text-[#b026ff] mb-2">Quick Start</h3>
+          <p className="text-gray-300 text-sm">Capture, extract, and understand — all from your dashboard.</p>
         </motion.div>
       </motion.div>
     </motion.div>
