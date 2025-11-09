@@ -10,13 +10,13 @@ const Home = () => {
 
   return (
     <motion.div
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white px-4 sm:px-0"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* 🌌 Floating teal–purple particles (same style as Login) */}
+      {/* 🌌 Floating teal–purple particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -28,26 +28,26 @@ const Home = () => {
             color: { value: ["#00ffff", "#b026ff"] },
             links: {
               color: "#00ffff",
-              distance: 130,
+              distance: 120,
               enable: true,
               opacity: 0.15,
-              width: 0.7,
+              width: 0.6,
             },
-            move: { enable: true, speed: 0.5 },
-            number: { value: 55 },
+            move: { enable: true, speed: 0.4 },
+            number: { value: 35 },
             opacity: { value: 0.35 },
             shape: { type: "circle" },
-            size: { value: { min: 1, max: 3 } },
+            size: { value: { min: 1, max: 2 } },
           },
           interactivity: {
             events: { onHover: { enable: true, mode: "repulse" }, resize: true },
-            modes: { repulse: { distance: 130, duration: 0.4 } },
+            modes: { repulse: { distance: 100, duration: 0.4 } },
           },
           detectRetina: true,
         }}
       />
 
-      {/* ✨ Floating background glow movement */}
+      {/* ✨ Floating glow background */}
       <motion.div
         className="absolute inset-0"
         animate={{
@@ -64,9 +64,9 @@ const Home = () => {
         }}
       />
 
-      {/* 🪩 Welcome Heading */}
+      {/* 🪩 Title */}
       <motion.h1
-        className="text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide relative z-10"
+        className="text-3xl sm:text-5xl font-extrabold mb-6 sm:mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide text-center relative z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 1 }}
@@ -76,7 +76,7 @@ const Home = () => {
 
       {/* 💬 Subtitle */}
       <motion.p
-        className="text-gray-300 text-lg mb-12 max-w-lg text-center leading-relaxed relative z-10"
+        className="text-gray-300 text-base sm:text-lg mb-10 sm:mb-12 max-w-md sm:max-w-lg text-center leading-relaxed relative z-10"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 1 }}
@@ -84,35 +84,33 @@ const Home = () => {
         Your intelligent vision companion — where AI meets simplicity.
       </motion.p>
 
-      {/* 💠 Animated Glass Cards */}
+      {/* 💠 Cards */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-6 z-10"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 z-10 w-full max-w-3xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
       >
-        {/* Card 1 */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-white/10 backdrop-blur-lg border border-teal-400/20 p-6 rounded-2xl shadow-[0_0_25px_#00ffff22] transition-all duration-500"
+          whileHover={{ scale: 1.03 }}
+          className="bg-white/10 backdrop-blur-lg border border-teal-400/20 p-5 sm:p-6 rounded-2xl shadow-[0_0_25px_#00ffff22] transition-all duration-500 text-center sm:text-left"
         >
-          <h3 className="text-xl font-semibold text-[#00ffff] mb-2">
+          <h3 className="text-lg sm:text-xl font-semibold text-[#00ffff] mb-2">
             Recent Activity
           </h3>
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-300 text-sm sm:text-base">
             View your recent OCR scans and AI responses here.
           </p>
         </motion.div>
 
-        {/* Card 2 */}
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-white/10 backdrop-blur-lg border border-purple-500/20 p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] transition-all duration-500"
+          whileHover={{ scale: 1.03 }}
+          className="bg-white/10 backdrop-blur-lg border border-purple-500/20 p-5 sm:p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] transition-all duration-500 text-center sm:text-left"
         >
-          <h3 className="text-xl font-semibold text-[#b026ff] mb-2">
+          <h3 className="text-lg sm:text-xl font-semibold text-[#b026ff] mb-2">
             Quick Start
           </h3>
-          <p className="text-gray-300 text-sm">
+          <p className="text-gray-300 text-sm sm:text-base">
             Capture, extract, and understand — all from your dashboard.
           </p>
         </motion.div>
