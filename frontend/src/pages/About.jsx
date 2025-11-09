@@ -18,7 +18,7 @@ const About = () => {
 
   return (
     <motion.div
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white px-4 sm:px-0"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -40 }}
@@ -33,7 +33,7 @@ const About = () => {
         transition={{ type: "tween", ease: "backOut", duration: 0.4 }}
       />
 
-      {/* ✨ Particle background */}
+      {/* ✨ Particle Background */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -66,16 +66,56 @@ const About = () => {
 
       {/* 🪩 Title */}
       <motion.h1
-        className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide relative z-10 text-center"
+        className="text-3xl sm:text-5xl font-extrabold mb-6 sm:mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide relative z-10 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 1 }}
       >
         About SynapSee
       </motion.h1>
 
+      {/* 💬 Description */}
       <motion.p
-        className="text-gray-300 text-lg max-w-lg text-center leading-relaxed relative z-10"
+        className="text-gray-300 text-sm sm:text-lg max-w-md sm:max-w-2xl text-center leading-relaxed sm:leading-loose relative z-10"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 1 }}
       >
-        SynapSee combines OCR with AI-powered insights to help you see and understand the world in a new light.
+        SynapSee is your intelligent visual assistant — combining Optical Character Recognition (OCR)
+        and AI-powered understanding into one seamless experience. Scan, analyze, and simplify with ease.
       </motion.p>
+
+      {/* 💠 Cards */}
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mt-10 sm:mt-16 px-4 sm:px-6 z-10 w-full max-w-3xl"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.3, duration: 1 }}
+      >
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          className="bg-white/10 backdrop-blur-lg border border-teal-400/20 p-5 sm:p-6 rounded-2xl shadow-[0_0_25px_#00ffff22] text-center sm:text-left"
+        >
+          <h3 className="text-lg sm:text-xl font-semibold text-[#00ffff] mb-2">
+            Our Vision
+          </h3>
+          <p className="text-gray-300 text-xs sm:text-sm">
+            Empower people to see and understand the world through AI-driven visual intelligence.
+          </p>
+        </motion.div>
+
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          className="bg-white/10 backdrop-blur-lg border border-purple-500/20 p-5 sm:p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] text-center sm:text-left"
+        >
+          <h3 className="text-lg sm:text-xl font-semibold text-[#b026ff] mb-2">
+            Our Mission
+          </h3>
+          <p className="text-gray-300 text-xs sm:text-sm">
+            Blend human creativity and machine intelligence into a single, intuitive experience.
+          </p>
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 };
