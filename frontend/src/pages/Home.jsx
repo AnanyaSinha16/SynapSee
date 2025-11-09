@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
-
   return (
     <motion.div
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
@@ -18,15 +11,6 @@ const Home = () => {
       exit={{ opacity: 0, y: -40 }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* 🌌 Cursor Glow */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none z-0"
-        animate={{
-          background: `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,255,255,0.15), transparent 70%)`,
-        }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.4 }}
-      />
-
       {/* ✨ Floating Teal–Purple Glow */}
       <motion.div
         className="absolute inset-0"
@@ -46,7 +30,7 @@ const Home = () => {
 
       {/* 🪩 Welcome Text */}
       <motion.h1
-        className="text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide"
+        className="text-5xl font-extrabold mb-6 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide text-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 1 }}
@@ -56,7 +40,7 @@ const Home = () => {
 
       {/* 💬 Subtitle */}
       <motion.p
-        className="text-gray-300 text-lg mb-12 max-w-lg text-center leading-relaxed"
+        className="text-gray-300 text-lg mb-14 max-w-lg text-center leading-relaxed"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8, duration: 1 }}
@@ -71,21 +55,29 @@ const Home = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
       >
+        {/* Recent Activity Card */}
         <motion.div
           whileHover={{ scale: 1.05 }}
           className="bg-white/10 backdrop-blur-lg border border-teal-400/20 p-6 rounded-2xl shadow-[0_0_25px_#00ffff22] transition-all duration-500"
         >
           <h3 className="text-xl font-semibold text-[#00ffff] mb-2">Recent Activity</h3>
-          <p className="text-gray-300 text-sm">View your recent OCR scans and AI responses here.</p>
+          <p className="text-gray-300 text-sm">
+            View your recent OCR scans and AI responses here.
+          </p>
         </motion.div>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          className="bg-white/10 backdrop-blur-lg border border-purple-500/20 p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] transition-all duration-500"
-        >
-          <h3 className="text-xl font-semibold text-[#b026ff] mb-2">Quick Start</h3>
-          <p className="text-gray-300 text-sm">Capture, extract, and understand — all from your dashboard.</p>
-        </motion.div>
+        {/* ✅ Quick Start Card → Link to OCR Dashboard */}
+        <Link to="/ocr-dashboard">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="cursor-pointer bg-white/10 backdrop-blur-lg border border-purple-500/20 p-6 rounded-2xl shadow-[0_0_25px_#b026ff22] transition-all duration-500"
+          >
+            <h3 className="text-xl font-semibold text-[#b026ff] mb-2">Quick Start</h3>
+            <p className="text-gray-300 text-sm">
+              Capture, extract, and understand — all from your dashboard.
+            </p>
+          </motion.div>
+        </Link>
       </motion.div>
     </motion.div>
   );
