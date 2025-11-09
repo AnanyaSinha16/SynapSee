@@ -1,0 +1,46 @@
+.floating-navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 20, 35, 0.7);
+  border-radius: 50px;
+  box-shadow: 0 0 30px rgba(121, 40, 202, 0.6);
+  padding: 8px 28px;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.floating-navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.floating-navbar a {
+  color: #ffffffcc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+  position: relative;
+}
+
+.floating-navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #7928ca, #00fff0);
+  transition: 0.4s;
+}
+
+.floating-navbar a:hover::after,
+.floating-navbar a.active::after {
+  width: 100%;
+}
+
+.floating-navbar a:hover {
+  color: #00fff0;
+}

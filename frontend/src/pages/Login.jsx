@@ -53,9 +53,10 @@ const Login = () => {
       {/* 🌌 Interactive radial glow following cursor */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
-        style={{
+        animate={{
           background: `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,255,255,0.15), transparent 70%)`,
         }}
+        transition={{ type: "tween", ease: "backOut", duration: 0.4 }}
       />
 
       {/* 💠 Floating glass login box */}
@@ -101,6 +102,7 @@ const Login = () => {
           </motion.button>
         </form>
 
+        {/* Sign up link */}
         <p className="text-gray-300 text-sm text-center mt-6">
           Don’t have an account?{" "}
           <Link to="/signup" className="text-[#00ffff] hover:underline">
