@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tesseract from "tesseract.js";
+import { Link } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const OcrDashboard = () => {
   const particlesInit = async (main) => await loadFull(main);
@@ -12,13 +14,38 @@ const OcrDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [pasteMessage, setPasteMessage] = useState(false);
-  const inputRef = useRef(null);
+  const [showLimitModal, setShowLimitModal] = useState(false);
+  const [usageCount, setUsageCount] = useState(0);
 
+  const inputRef = useRef(null);
+  const auth = getAuth();
+
+  // ✅ Load usage count from localStorage on first render
+  useEffect(() => {
+    const storedCount = parseInt(localStorage.getItem("usageCount") || "0", 10);
+    setUsageCount(storedCount);
+  }, []);
+
+  // ✅ Reset usage count when user logs in
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        localStorage.removeItem("usageCount");
+        setUsageCount(0);
+      }
+    });
+    return () => unsubscribe();
+  }, [auth]);
+
+  // ✅ Handle mouse movement (for glow)
   useEffect(() => {
     const handleMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
 
-    // ✅ Handle Paste (Ctrl+V)
+  // ✅ Handle paste event
+  useEffect(() => {
     const handlePaste = (e) => {
       if (e.clipboardData && e.clipboardData.items) {
         for (let i = 0; i < e.clipboardData.items.length; i++) {
@@ -34,14 +61,10 @@ const OcrDashboard = () => {
       }
     };
     window.addEventListener("paste", handlePaste);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("paste", handlePaste);
-    };
+    return () => window.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ✅ Handle normal upload
+  // ✅ Handle file selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) setImage(URL.createObjectURL(file));
@@ -69,8 +92,28 @@ const OcrDashboard = () => {
     }
   };
 
+  // ✅ OCR logic + usage counter update
   const handleScan = async () => {
-    if (!image) return alert("Please upload an image first!");
+    const user = auth.currentUser;
+
+    // Guest user limit check
+    if (!user && usageCount >= 7) {
+      setShowLimitModal(true);
+      return;
+    }
+
+    if (!image) {
+      alert("Please upload an image first!");
+      return;
+    }
+
+    // Increase count for guest users
+    if (!user) {
+      const newCount = usageCount + 1;
+      setUsageCount(newCount);
+      localStorage.setItem("usageCount", newCount.toString());
+    }
+
     setLoading(true);
     setExtractedText("");
 
@@ -95,7 +138,7 @@ const OcrDashboard = () => {
       transition={{ duration: 1, ease: "easeInOut" }}
       onDragEnter={handleDrag}
     >
-      {/* 🌌 Glow and Particles */}
+      {/* ✨ Particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -126,14 +169,20 @@ const OcrDashboard = () => {
         className="absolute inset-0 z-0"
       />
 
+      {/* 🌌 Cursor Glow */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,255,255,0.15), transparent 70%)`,
+        }}
+      />
+
       {/* 💠 Title */}
-      <motion.h1
-        className="text-4xl sm:text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide relative z-10 text-center"
-      >
+      <motion.h1 className="text-4xl sm:text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide relative z-10 text-center">
         SynapSee OCR Dashboard
       </motion.h1>
 
-      {/* 📷 Upload Section with Drag & Drop + Paste */}
+      {/* 📷 Upload Section */}
       <motion.div
         className={`relative z-10 bg-white/10 backdrop-blur-lg border ${
           dragActive ? "border-[#00ffff]" : "border-teal-400/20"
@@ -156,10 +205,6 @@ const OcrDashboard = () => {
           className="hidden"
         />
 
-        <p className="text-gray-300 text-sm mb-4">
-          Choose, drop, or paste an image for OCR extraction.
-        </p>
-
         {pasteMessage && (
           <motion.p
             className="text-green-400 text-sm mb-2"
@@ -181,7 +226,9 @@ const OcrDashboard = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {loading ? "Scanning..." : "Start Scanning"}
+          {loading
+            ? "Scanning..."
+            : `Start Scanning (${usageCount}/7 free)`}
         </motion.button>
 
         {image && (
@@ -189,7 +236,6 @@ const OcrDashboard = () => {
             className="mt-6 flex justify-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
           >
             <img
               src={image}
@@ -200,13 +246,12 @@ const OcrDashboard = () => {
         )}
       </motion.div>
 
-      {/* 🧾 Extracted Text Display */}
+      {/* 🧾 Extracted Text */}
       {extractedText && (
         <motion.div
           className="relative z-10 mt-8 bg-white/10 backdrop-blur-lg border border-purple-400/20 shadow-[0_0_25px_#b026ff22] p-6 rounded-3xl max-w-3xl w-[90%] text-left overflow-auto max-h-96"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
         >
           <h3 className="text-lg font-semibold text-[#b026ff] mb-3">
             Extracted Text
@@ -214,6 +259,30 @@ const OcrDashboard = () => {
           <pre className="text-gray-200 whitespace-pre-wrap text-sm leading-relaxed">
             {extractedText}
           </pre>
+        </motion.div>
+      )}
+
+      {/* 🚫 Limit Modal */}
+      {showLimitModal && (
+        <motion.div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-[#00ffff55] text-center w-[90%] max-w-sm">
+            <h2 className="text-2xl font-bold text-[#00ffff] mb-4">
+              Limit Reached
+            </h2>
+            <p className="text-gray-300 mb-6">
+              You’ve used your 7 free scans. Please log in or sign up to continue.
+            </p>
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-[#00ffff] to-[#b026ff] text-white py-2 px-4 rounded-lg shadow-md hover:shadow-[0_0_25px_#00ffffaa]"
+            >
+              Go to Login / Sign Up
+            </Link>
+          </div>
         </motion.div>
       )}
     </motion.div>
