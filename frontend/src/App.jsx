@@ -12,14 +12,22 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        {/* Default route goes to Home */}
+
+        {/* Default route */}
         <Route path="/" element={<Navigate to="/home" replace />} />
+
+        {/* Pages */}
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<Navigate to="/home" replace />} />
+
+        {/* ⭐ QUICK START OCR PAGE */}
         <Route path="/ocr-dashboard" element={<OcrDashboard />} />
+
+        {/* fallback */}
+        <Route path="*" element={<Navigate to="/home" replace />} />
+
       </Routes>
     </Router>
   );

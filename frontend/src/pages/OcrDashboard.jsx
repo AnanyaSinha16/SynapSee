@@ -3,49 +3,62 @@ import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Tesseract from "tesseract.js";
-import { Link } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const OcrDashboard = () => {
   const particlesInit = async (main) => await loadFull(main);
+
+  const auth = getAuth();
+  const navigate = useNavigate();
+
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [image, setImage] = useState(null);
   const [extractedText, setExtractedText] = useState("");
   const [loading, setLoading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [pasteMessage, setPasteMessage] = useState(false);
-  const [showLimitModal, setShowLimitModal] = useState(false);
-  const [usageCount, setUsageCount] = useState(0);
-
+  const [freeLeft, setFreeLeft] = useState(7);
   const inputRef = useRef(null);
-  const auth = getAuth();
 
-  // ✅ Load usage count from localStorage on first render
-  useEffect(() => {
-    const storedCount = parseInt(localStorage.getItem("usageCount") || "0", 10);
-    setUsageCount(storedCount);
-  }, []);
+  // ============================
+  // 🌟 FREE SCAN LIMIT CHECK
+  // ============================
+  const checkFreeLimit = () => {
+    const user = auth.currentUser;
 
-  // ✅ Reset usage count when user logs in
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        localStorage.removeItem("usageCount");
-        setUsageCount(0);
-      }
-    });
-    return () => unsubscribe();
-  }, [auth]);
+    // Logged in → unlimited scans
+    if (user) return true;
 
-  // ✅ Handle mouse movement (for glow)
+    let count = localStorage.getItem("free_scans");
+    if (!count) count = 0;
+
+    if (count >= 7) {
+      alert("⚠️ You used all 7 free scans. Please login to continue.");
+      navigate("/login");
+      return false;
+    }
+
+    const updatedCount = Number(count) + 1;
+    localStorage.setItem("free_scans", updatedCount);
+    setFreeLeft(7 - updatedCount);
+    return true;
+  };
+
+  // ============================
+  // 🌟 Load free scan counter on mount
+  // ============================
   useEffect(() => {
     const handleMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
 
-  // ✅ Handle paste event
-  useEffect(() => {
+    // Get remaining free scans (only for guests)
+    if (!auth.currentUser) {
+      const count = Number(localStorage.getItem("free_scans")) || 0;
+      setFreeLeft(7 - count);
+    }
+
+    // Handle Paste (Ctrl + V)
     const handlePaste = (e) => {
       if (e.clipboardData && e.clipboardData.items) {
         for (let i = 0; i < e.clipboardData.items.length; i++) {
@@ -60,17 +73,26 @@ const OcrDashboard = () => {
         }
       }
     };
+
     window.addEventListener("paste", handlePaste);
-    return () => window.removeEventListener("paste", handlePaste);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("paste", handlePaste);
+    };
   }, []);
 
-  // ✅ Handle file selection
+  // ============================
+  // 🌟 Upload
+  // ============================
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) setImage(URL.createObjectURL(file));
   };
 
-  // ✅ Handle drag-drop
+  // ============================
+  // 🌟 Drag-drop
+  // ============================
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -82,6 +104,7 @@ const OcrDashboard = () => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       if (file.type.startsWith("image/")) {
@@ -92,27 +115,13 @@ const OcrDashboard = () => {
     }
   };
 
-  // ✅ OCR logic + usage counter update
+  // ============================
+  // 🌟 OCR Scan
+  // ============================
   const handleScan = async () => {
-    const user = auth.currentUser;
+    if (!checkFreeLimit()) return;
 
-    // Guest user limit check
-    if (!user && usageCount >= 7) {
-      setShowLimitModal(true);
-      return;
-    }
-
-    if (!image) {
-      alert("Please upload an image first!");
-      return;
-    }
-
-    // Increase count for guest users
-    if (!user) {
-      const newCount = usageCount + 1;
-      setUsageCount(newCount);
-      localStorage.setItem("usageCount", newCount.toString());
-    }
+    if (!image) return alert("Please upload an image first!");
 
     setLoading(true);
     setExtractedText("");
@@ -121,10 +130,11 @@ const OcrDashboard = () => {
       const result = await Tesseract.recognize(image, "eng", {
         logger: (m) => console.log(m),
       });
-      setExtractedText(result.data.text || "⚠️ No readable text found.");
+
+      setExtractedText(result.data.text || "⚠️ No text found.");
     } catch (error) {
-      console.error("OCR Error:", error);
-      alert("Failed to extract text. Try again!");
+      alert("OCR failed. Please try again!");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -135,10 +145,10 @@ const OcrDashboard = () => {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+      transition={{ duration: 1 }}
       onDragEnter={handleDrag}
     >
-      {/* ✨ Particles */}
+      {/* 🔮 Background Particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -169,20 +179,19 @@ const OcrDashboard = () => {
         className="absolute inset-0 z-0"
       />
 
-      {/* 🌌 Cursor Glow */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{
-          background: `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, rgba(0,255,255,0.15), transparent 70%)`,
-        }}
-      />
-
-      {/* 💠 Title */}
-      <motion.h1 className="text-4xl sm:text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent tracking-wide relative z-10 text-center">
+      {/* 🔥 Title */}
+      <h1 className="text-4xl sm:text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent relative z-10">
         SynapSee OCR Dashboard
-      </motion.h1>
+      </h1>
 
-      {/* 📷 Upload Section */}
+      {/* Free Scans Left */}
+      {!auth.currentUser && (
+        <p className="text-red-400 mb-2 relative z-10">
+          Free scans left: {freeLeft} / 7
+        </p>
+      )}
+
+      {/* 📤 Upload Box */}
       <motion.div
         className={`relative z-10 bg-white/10 backdrop-blur-lg border ${
           dragActive ? "border-[#00ffff]" : "border-teal-400/20"
@@ -193,10 +202,11 @@ const OcrDashboard = () => {
         onDragLeave={handleDrag}
         onClick={() => inputRef.current.click()}
       >
-        <h3 className="text-xl font-semibold text-[#00ffff] mb-3">
+        <h3 className="text-xl font-semibold text-[#00ffff] mb-2">
           Upload / Drag-Drop / Paste (Ctrl + V)
         </h3>
 
+        {/* Hidden input */}
         <input
           ref={inputRef}
           type="file"
@@ -205,16 +215,12 @@ const OcrDashboard = () => {
           className="hidden"
         />
 
+        {/* Paste message */}
         {pasteMessage && (
-          <motion.p
-            className="text-green-400 text-sm mb-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            📋 Image pasted from clipboard!
-          </motion.p>
+          <p className="text-green-400 text-sm mb-2">📋 Image pasted!</p>
         )}
 
+        {/* Button */}
         <motion.button
           onClick={handleScan}
           disabled={loading}
@@ -222,15 +228,13 @@ const OcrDashboard = () => {
             loading
               ? "bg-gray-500 cursor-not-allowed"
               : "bg-gradient-to-r from-[#00ffff] to-[#b026ff]"
-          } text-white font-semibold hover:shadow-[0_0_25px_#00ffffaa] transition-all duration-500`}
+          } text-white font-semibold`}
           whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
         >
-          {loading
-            ? "Scanning..."
-            : `Start Scanning (${usageCount}/7 free)`}
+          {loading ? "Scanning..." : "Start Scanning"}
         </motion.button>
 
+        {/* Image Preview */}
         {image && (
           <motion.div
             className="mt-6 flex justify-center"
@@ -239,50 +243,27 @@ const OcrDashboard = () => {
           >
             <img
               src={image}
-              alt="Uploaded Preview"
+              alt="Preview"
               className="rounded-lg max-h-48 border border-[#00ffff33]"
             />
           </motion.div>
         )}
       </motion.div>
 
-      {/* 🧾 Extracted Text */}
+      {/* 📝 Extracted Text */}
       {extractedText && (
         <motion.div
-          className="relative z-10 mt-8 bg-white/10 backdrop-blur-lg border border-purple-400/20 shadow-[0_0_25px_#b026ff22] p-6 rounded-3xl max-w-3xl w-[90%] text-left overflow-auto max-h-96"
+          className="relative z-10 mt-8 bg-white/10 backdrop-blur-lg border border-purple-400/20 p-6 rounded-3xl max-w-3xl w-[90%] text-left max-h-96 overflow-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <h3 className="text-lg font-semibold text-[#b026ff] mb-3">
+          <h3 className="text-lg font-semibold text-[#b026ff] mb-2">
             Extracted Text
           </h3>
-          <pre className="text-gray-200 whitespace-pre-wrap text-sm leading-relaxed">
+
+          <pre className="text-gray-200 whitespace-pre-wrap text-sm">
             {extractedText}
           </pre>
-        </motion.div>
-      )}
-
-      {/* 🚫 Limit Modal */}
-      {showLimitModal && (
-        <motion.div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        >
-          <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-[#00ffff55] text-center w-[90%] max-w-sm">
-            <h2 className="text-2xl font-bold text-[#00ffff] mb-4">
-              Limit Reached
-            </h2>
-            <p className="text-gray-300 mb-6">
-              You’ve used your 7 free scans. Please log in or sign up to continue.
-            </p>
-            <Link
-              to="/login"
-              className="bg-gradient-to-r from-[#00ffff] to-[#b026ff] text-white py-2 px-4 rounded-lg shadow-md hover:shadow-[0_0_25px_#00ffffaa]"
-            >
-              Go to Login / Sign Up
-            </Link>
-          </div>
         </motion.div>
       )}
     </motion.div>

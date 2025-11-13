@@ -13,19 +13,20 @@ const Home = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  // ✅ Handles navigation for "Recent Activity"
+  // 🟢 If user is logged in → show recent activity
+  // 🔴 If not logged in → redirect to login
   const handleRecentActivity = () => {
     const user = auth.currentUser;
     if (!user) {
-      navigate("/login"); // Redirect to login if not logged in
+      navigate("/login");
     } else {
-      navigate("/recent-activity"); // Go to history if logged in
+      navigate("/recent-activity");
     }
   };
 
-  // ✅ Handles "Quick Start" (direct access to OCR dashboard)
+  // 🔥 FIXED — correctly opens the OCR Dashboard page
   const handleQuickStart = () => {
-    navigate("/quickstart");
+    navigate("/ocr-dashboard");
   };
 
   return (
@@ -35,10 +36,11 @@ const Home = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* 🌌 Background Particles */}
+      {/* ✨ Background Particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
+        className="absolute inset-0 z-0"
         options={{
           fullScreen: { enable: false },
           fpsLimit: 60,
@@ -63,10 +65,9 @@ const Home = () => {
           },
           detectRetina: true,
         }}
-        className="absolute inset-0 z-0"
       />
 
-      {/* 🧠 Welcome Text */}
+      {/* 🧠 HERO TEXT */}
       <motion.h1
         className="text-5xl sm:text-6xl font-extrabold mb-4 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent text-center relative z-10"
         initial={{ opacity: 0, y: -20 }}
@@ -92,7 +93,7 @@ const Home = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        {/* 🟢 Recent Activity */}
+        {/* 🟢 RECENT ACTIVITY */}
         <div
           onClick={handleRecentActivity}
           className="p-8 bg-white/10 backdrop-blur-lg border border-[#00ffff33] rounded-2xl w-80 text-left hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_25px_#00ffff55] cursor-pointer"
@@ -105,7 +106,7 @@ const Home = () => {
           </p>
         </div>
 
-        {/* 🟣 Quick Start */}
+        {/* 🟣 QUICK START */}
         <div
           onClick={handleQuickStart}
           className="p-8 bg-white/10 backdrop-blur-lg border border-[#b026ff33] rounded-2xl w-80 text-left hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_25px_#b026ffaa] cursor-pointer"
