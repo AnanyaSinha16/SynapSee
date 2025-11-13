@@ -1,85 +1,119 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { motion } from "framer-motion";
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const auth = getAuth();
+  const [user, setUser] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsub = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe();
+    return () => unsub();
   }, []);
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    setUser(null);
-    navigate("/login");
-  };
+  const isActive = (path) => location.pathname === path;
+
+  // Pill button base style
+  const pillStyle = `
+    px-6 py-2 rounded-full text-sm font-medium
+    transition-all duration-300
+    border border-white/10 backdrop-blur-lg
+    hover:shadow-[0_0_12px_#00fff5] hover:text-cyan-300
+  `;
 
   return (
-    <motion.nav
-      className="fixed top-4 left-1/2 -translate-x-1/2 flex items-center gap-6 bg-[#0b001b]/70 backdrop-blur-md text-white px-6 py-2 rounded-full shadow-[0_0_20px_#00ffff33] z-50"
-      initial={{ opacity: 0, y: -30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <Link to="/" className="hover:text-[#00ffff] transition-all duration-300">
-        Home
-      </Link>
-      <Link to="/about" className="hover:text-[#b026ff] transition-all duration-300">
-        About
-      </Link>
-
-      {!user ? (
-        <Link to="/login" className="hover:text-[#00ffff] transition-all duration-300">
-          Login
+    <nav className="fixed top-4 w-full flex justify-center z-50">
+      <div className="flex items-center gap-4">
+        
+        {/* HOME BUTTON */}
+        <Link
+          to="/home"
+          className={`
+            ${pillStyle}
+            ${isActive("/home")
+              ? "text-cyan-300 shadow-[0_0_12px_#00fff5]"
+              : "text-white bg-[#0d1021]/60"
+            }
+          `}
+        >
+          Home
         </Link>
-      ) : (
-        <div className="relative">
-          {/* Profile Avatar */}
-          <div
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="w-8 h-8 rounded-full bg-gradient-to-r from-[#00ffff] to-[#b026ff] flex items-center justify-center cursor-pointer font-semibold text-black"
-            title={user.email}
+
+        {/* ABOUT BUTTON */}
+        <Link
+          to="/about"
+          className={`
+            ${pillStyle}
+            ${isActive("/about")
+              ? "text-cyan-300 shadow-[0_0_12px_#00fff5]"
+              : "text-white bg-[#0d1021]/60"
+            }
+          `}
+        >
+          About
+        </Link>
+
+        {/* PROFILE / LOGIN */}
+        {!user ? (
+          <Link
+            to="/login"
+            className={`
+              ${pillStyle}
+              ${isActive("/login")
+                ? "text-cyan-300 shadow-[0_0_12px_#00fff5]"
+                : "text-white bg-[#0d1021]/60"
+              }
+            `}
           >
-            {user.photoURL ? (
-              <img
-                src={user.photoURL}
-                alt="Profile"
-                className="w-8 h-8 rounded-full object-cover"
-              />
-            ) : (
-              user.email.charAt(0).toUpperCase()
+            Login
+          </Link>
+        ) : (
+          <div className="relative">
+            <div
+              onClick={() => setShowProfile(!showProfile)}
+              className="
+                w-10 h-10 flex items-center justify-center 
+                rounded-full bg-green-500 cursor-pointer 
+                text-white text-sm font-bold shadow-[0_0_10px_#00ff72]
+                hover:shadow-[0_0_15px_#00ff72] transition-all
+              "
+            >
+              {user.displayName ? user.displayName.charAt(0).toUpperCase() : "A"}
+            </div>
+
+            {/* Profile Dropdown */}
+            {showProfile && (
+              <div className="
+                absolute right-0 mt-3 w-48 p-4 
+                bg-[#0b0f1e]/90 backdrop-blur-xl
+                border border-white/10 rounded-xl shadow-xl
+              ">
+                <p className="text-white font-semibold">
+                  {user.displayName || "No Name"}
+                </p>
+                <p className="text-gray-400 text-xs mb-3">{user.email}</p>
+
+                <button className="text-blue-400 text-sm hover:underline mb-2">
+                  Change Profile Photo
+                </button>
+
+                <button
+                  onClick={() => signOut(auth)}
+                  className="text-red-400 text-sm hover:underline"
+                >
+                  Logout
+                </button>
+              </div>
             )}
           </div>
+        )}
 
-          {/* Dropdown Menu */}
-          {menuOpen && (
-            <motion.div
-              className="absolute right-0 mt-2 w-40 bg-[#0b001b]/90 border border-[#00ffff33] rounded-xl shadow-lg backdrop-blur-lg text-sm"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="px-4 py-2 border-b border-[#00ffff22] text-gray-300 truncate">
-                {user.email}
-              </div>
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-4 py-2 hover:bg-[#b026ff22] transition-all"
-              >
-                Logout
-              </button>
-            </motion.div>
-          )}
-        </div>
-      )}
-    </motion.nav>
+      </div>
+    </nav>
   );
 };
 
