@@ -1,24 +1,20 @@
-// Import the functions you need from the SDKs you need
+// src/firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBnjrrsbNOO5qgEopVORe0YAAqtQIsUkxc",
-  authDomain: "synapsee-login.firebaseapp.com",
-  projectId: "synapsee-login",
-  storageBucket: "synapsee-login.appspot.com", // ✅ fixed domain
-  messagingSenderId: "282353835071",
-  appId: "1:282353835071:web:7b7128d3a8d75d5fe7ec8a",
-  measurementId: "G-H1K84Q0H7M"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "XXXXXXXXXX",
+  appId: "XXXXXXXXXXXX"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
-// Auth setup
 export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
-export default app;
+export const db = getFirestore(app);
+export const storage = getStorage(app);

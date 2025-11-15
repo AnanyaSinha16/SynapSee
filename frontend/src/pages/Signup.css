@@ -1,0 +1,127 @@
+/* Background container */
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;                      /* FIXED: moved box upward */
+  background: radial-gradient(circle at top, #0f1129, #05060f 70%);
+}
+
+/* Glass + Glow Smaller Card */
+.signup-box {
+  width: 380px;                           /* SMALLER COMPACT BOX */
+  max-width: 92%;
+  padding: 30px;                          /* compact padding */
+  border-radius: 25px;
+
+  /* Glass effect */
+  background: rgba(20, 20, 30, 0.45);
+  backdrop-filter: blur(12px);
+
+  /* Neon Glow */
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow:
+      0 0 18px rgba(0, 255, 255, 0.22),
+      0 0 32px rgba(130, 0, 255, 0.18),
+      inset 0 0 15px rgba(0, 255, 255, 0.05);
+
+  box-sizing: border-box;
+}
+
+/* Gradient Title */
+.gradient-title {
+  text-align: center;
+  font-size: 32px;                        /* slightly smaller */
+  font-weight: 700;
+  background: linear-gradient(to right, #00eaff, #b572ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+}
+
+/* Error Message */
+.error-text {
+  color: #ff6363;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Labels */
+.signup-box label {
+  color: #d6d7e0;
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Inputs */
+.input-box {
+  width: 100%;
+  padding: 12px;                          /* smaller input height */
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(120,120,150,0.35);
+  border-radius: 12px;
+  color: #f7f7f7;
+  font-size: 15px;                        /* compact text size */
+  margin-bottom: 12px;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.input-box:focus {
+  border-color: #8b5cff;
+  box-shadow: 0 0 12px rgba(139, 92, 255, 0.5);
+}
+
+/* Password Rules */
+.rules-box {
+  margin: 10px 0 18px;
+}
+
+.valid {
+  color: #22c55e;
+  font-size: 13px;
+}
+
+.invalid {
+  color: #ff4e4e;
+  font-size: 13px;
+}
+
+/* Sign Up Button */
+.signup-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #00eaff, #a948ff);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s ease;
+}
+
+.signup-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.signup-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(140, 0, 255, 0.55);
+}
+
+/* Login link */
+.login-link {
+  margin-top: 18px;
+  text-align: center;
+  color: #dcdcdc;
+}
+
+.login-link a {
+  color: #66d6ff;
+  font-weight: bold;
+  text-decoration: none;
+}

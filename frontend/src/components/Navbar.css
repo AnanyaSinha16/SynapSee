@@ -1,46 +1,33 @@
-.floating-navbar {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(20, 20, 35, 0.7);
-  border-radius: 50px;
-  box-shadow: 0 0 30px rgba(121, 40, 202, 0.6);
-  padding: 8px 28px;
-  z-index: 100;
-  backdrop-filter: blur(12px);
+.navbar {
+    width: 100%;
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
 }
 
-.floating-navbar ul {
-  display: flex;
-  list-style: none;
-  gap: 30px;
+.navbar a {
+    color: white;
+    padding: 10px 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+    transition: 0.25s ease;
 }
 
-.floating-navbar a {
-  color: #ffffffcc;
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.3s;
-  position: relative;
+.navbar a:hover {
+    background: rgba(56, 189, 248, 0.25);
+    box-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
 }
 
-.floating-navbar a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg, #7928ca, #00fff0);
-  transition: 0.4s;
-}
-
-.floating-navbar a:hover::after,
-.floating-navbar a.active::after {
-  width: 100%;
-}
-
-.floating-navbar a:hover {
-  color: #00fff0;
+.navbar .active {
+    background: rgba(56, 189, 248, 0.35);
+    box-shadow: 0 0 18px rgba(0, 200, 255, 0.45);
+    border-color: rgba(56, 189, 248, 0.6);
 }
