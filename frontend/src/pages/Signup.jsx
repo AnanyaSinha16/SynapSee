@@ -16,21 +16,21 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const isLongEnough = password.length >= 8;
-  const hasNumber = /\d/.test(password);
-  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasLength = password.length >= 8;
+  const hasNum = /\d/.test(password);
+  const hasLetter = /[A-Za-z]/.test(password);
   const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  const hasUpperLower = /(?=.*[a-z])(?=.*[A-Z])/.test(password);
+  const hasBothCases = /[a-z]/.test(password) && /[A-Z]/.test(password);
 
   const allValid =
-    isLongEnough && hasNumber && hasLetter && hasSymbol && hasUpperLower;
+    hasLength && hasNum && hasLetter && hasSymbol && hasBothCases;
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
 
     if (!allValid) {
-      setError("Password does not meet security requirements.");
+      setError("Password does not meet the required criteria.");
       return;
     }
 
@@ -47,17 +47,23 @@ const Signup = () => {
     }
   };
 
+  const handleGoogleSignup = async () => {
+    try {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="signup-container">
-
-      <div className="signup-box">
-
-        <h1 className="gradient-title">Create Account</h1>
+      <div className="signup-card glow-box">
+        <h1>Create Account</h1>
 
         {error && <p className="error-text">{error}</p>}
 
         <form onSubmit={handleSignup}>
-
           <label>Email</label>
           <input
             type="email"
@@ -76,26 +82,21 @@ const Signup = () => {
             required
           />
 
-          {/* Password Rules */}
-          <div className="rules-box">
-
-            <p className={isLongEnough ? "valid" : "invalid"}>
+          <ul className="rules">
+            <li className={hasLength ? "valid" : "invalid"}>
               • At least 8 characters
-            </p>
-            <p className={hasNumber ? "valid" : "invalid"}>
-              • Contains a number
-            </p>
-            <p className={hasLetter ? "valid" : "invalid"}>
+            </li>
+            <li className={hasNum ? "valid" : "invalid"}>• Contains a number</li>
+            <li className={hasLetter ? "valid" : "invalid"}>
               • Contains a letter
-            </p>
-            <p className={hasSymbol ? "valid" : "invalid"}>
+            </li>
+            <li className={hasSymbol ? "valid" : "invalid"}>
               • Contains a symbol
-            </p>
-            <p className={hasUpperLower ? "valid" : "invalid"}>
-              • Uppercase and lowercase letters
-            </p>
-
-          </div>
+            </li>
+            <li className={hasBothCases ? "valid" : "invalid"}>
+              • Uppercase & lowercase letters
+            </li>
+          </ul>
 
           <label>Confirm Password</label>
           <input
@@ -111,10 +112,18 @@ const Signup = () => {
           </button>
         </form>
 
-        <p className="login-link">
+        <button className="google-signup-btn" onClick={handleGoogleSignup}>
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            className="google-icon"
+            alt="Google"
+          />
+          Continue with Google
+        </button>
+
+        <p className="bottom-text">
           Already have an account? <Link to="/login">Log in</Link>
         </p>
-
       </div>
     </div>
   );

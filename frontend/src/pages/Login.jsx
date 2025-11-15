@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "./Login.css";   
 import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
@@ -68,11 +68,17 @@ const Login = () => {
           </button>
         </form>
 
+        {/* GOOGLE BUTTON WITH ICON */}
         <button className="google-login-btn" onClick={handleGoogleLogin}>
+          <img
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            alt="Google"
+            className="google-icon"
+          />
           Continue with Google
         </button>
 
-        <p style={{ marginTop: "15px", color: "#9ca3af" }}>
+        <p className="bottom-text">
           Don’t have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </div>
