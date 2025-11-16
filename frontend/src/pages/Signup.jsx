@@ -17,20 +17,19 @@ const Signup = () => {
   const [error, setError] = useState("");
 
   const hasLength = password.length >= 8;
-  const hasNum = /\d/.test(password);
-  const hasLetter = /[A-Za-z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasLetter = /[a-zA-Z]/.test(password);
   const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-  const hasBothCases = /[a-z]/.test(password) && /[A-Z]/.test(password);
+  const hasUpperLower = /(?=.*[a-z])(?=.*[A-Z])/.test(password);
 
   const allValid =
-    hasLength && hasNum && hasLetter && hasSymbol && hasBothCases;
+    hasLength && hasNumber && hasLetter && hasSymbol && hasUpperLower;
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setError("");
 
     if (!allValid) {
-      setError("Password does not meet the required criteria.");
+      setError("Password does not meet all requirements.");
       return;
     }
 
@@ -41,7 +40,12 @@ const Signup = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login");
+
+      // ⭐ STEP 5 — Mark logged in + reset attempts
+      localStorage.setItem("userLoggedIn", "true");
+      localStorage.removeItem("quick_attempts");
+
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -50,6 +54,11 @@ const Signup = () => {
   const handleGoogleSignup = async () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
+
+      // ⭐ STEP 5 — After Google Sign Up too
+      localStorage.setItem("userLoggedIn", "true");
+      localStorage.removeItem("quick_attempts");
+
       navigate("/dashboard");
     } catch (err) {
       setError(err.message);
@@ -57,74 +66,66 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-card glow-box">
-        <h1>Create Account</h1>
+    <div className="signup-page">
+      <form className="signup-card" onSubmit={handleSignup}>
+        <h2 className="title">Create Account</h2>
 
-        {error && <p className="error-text">{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-        <form onSubmit={handleSignup}>
-          <label>Email</label>
-          <input
-            type="email"
-            className="input-box"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <label>Email</label>
+        <input
+          className="input-field"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-          <label>Password</label>
-          <input
-            type="password"
-            className="input-box"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <label>Password</label>
+        <input
+          className="input-field"
+          type="password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <ul className="rules">
-            <li className={hasLength ? "valid" : "invalid"}>
-              • At least 8 characters
-            </li>
-            <li className={hasNum ? "valid" : "invalid"}>• Contains a number</li>
-            <li className={hasLetter ? "valid" : "invalid"}>
-              • Contains a letter
-            </li>
-            <li className={hasSymbol ? "valid" : "invalid"}>
-              • Contains a symbol
-            </li>
-            <li className={hasBothCases ? "valid" : "invalid"}>
-              • Uppercase & lowercase letters
-            </li>
-          </ul>
+        <ul className="rules">
+          <li className={hasLength ? "valid" : "invalid"}>At least 8 characters</li>
+          <li className={hasNumber ? "valid" : "invalid"}>Contains a number</li>
+          <li className={hasLetter ? "valid" : "invalid"}>Contains a letter</li>
+          <li className={hasSymbol ? "valid" : "invalid"}>Contains a symbol</li>
+          <li className={hasUpperLower ? "valid" : "invalid"}>
+            Uppercase & lowercase letters
+          </li>
+        </ul>
 
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            className="input-box"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
+        <label>Confirm Password</label>
+        <input
+          className="input-field"
+          type="password"
+          required
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
 
-          <button className="signup-btn" disabled={!allValid}>
-            Sign Up
-          </button>
-        </form>
+        <button className="signup-btn" disabled={!allValid}>
+          Sign Up
+        </button>
 
-        <button className="google-signup-btn" onClick={handleGoogleSignup}>
+        <button type="button" className="google-btn" onClick={handleGoogleSignup}>
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
-            className="google-icon"
             alt="Google"
+            className="google-icon"
           />
           Continue with Google
         </button>
 
-        <p className="bottom-text">
+        <p className="login-link">
           Already have an account? <Link to="/login">Log in</Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 };

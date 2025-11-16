@@ -1,65 +1,52 @@
-/* Page container */
-.signup-container {
-  min-height: 100vh;
+/* PAGE */
+.signup-page {
   display: flex;
   justify-content: center;
-  padding-top: 70px; /* moved up slightly */
-  background: radial-gradient(circle at top, #0f1129, #05060f 70%);
+  padding-top: 60px;
+  padding-bottom: 40px;
+  min-height: 100vh;
+  background: #0f172a;
 }
 
-/* Signup card – HEIGHT FIXED */
+/* CARD */
 .signup-card {
-  width: 360px;          /* SAME width */
-  padding: 24px 26px;    /* REDUCED height */
-  border-radius: 20px;
+  width: 380px;
+  padding: 22px 26px;         /* SMALLER HEIGHT */
   background: rgba(17, 24, 39, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 0 22px rgba(0, 200, 255, 0.25);
   color: white;
-  text-align: left;
 }
 
-/* Glow */
-.glow-box {
-  border: 1px solid rgba(0, 200, 255, 0.3);
-  box-shadow: 0 0 30px rgba(0, 200, 255, 0.25),
-              inset 0 0 15px rgba(0, 200, 255, 0.2);
-}
-
-/* Title */
-h1 {
+/* TITLE */
+.title {
   text-align: center;
-  background: linear-gradient(to right, #06b6d4, #9333ea);
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, #22d3ee, #9333ea);
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 28px;
-  margin-bottom: 18px; /* smaller */
 }
 
-/* Labels */
-label {
-  font-size: 14px;
-  margin-bottom: 4px;
-  display: block;
-}
-
-/* Inputs – Smaller spacing */
-.input-box {
+/* INPUTS */
+.input-field {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;   /* reduced */
+  padding: 10px;     /* reduced height */
+  margin: 4px 0 10px;
   background: #1e293b;
   border: 1px solid #334155;
   border-radius: 10px;
   color: white;
+  font-size: 15px;
 }
 
-/* Password rules – compact */
+/* PASSWORD RULES */
 .rules {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 4px;
-  margin-bottom: 12px;
+  margin: 6px 0 12px;
+  padding-left: 18px;
+  font-size: 13px;
 }
-
 .valid {
   color: #4ade80;
 }
@@ -67,58 +54,50 @@ label {
   color: #ef4444;
 }
 
-/* Button – closer spacing */
+/* SIGNUP BUTTON */
 .signup-btn {
   width: 100%;
-  padding: 12px;
-  margin-top: 8px;   /* reduced spacing */
-  background: linear-gradient(to right, #06b6d4, #9333ea);
+  padding: 12px;      /* smaller */
+  margin-top: 8px;
   border: none;
-  border-radius: 14px;
-  color: white;
+  border-radius: 12px;
   font-size: 17px;
   cursor: pointer;
+  background: linear-gradient(90deg, #0ea5e9, #9333ea);
+  color: white;
 }
-
 .signup-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-/* Google button with icon */
-.google-signup-btn {
+/* GOOGLE BUTTON */
+.google-btn {
   width: 100%;
-  padding: 12px;
-  margin-top: 12px;      /* reduced */
+  padding: 14px;
   background: white;
-  color: black;
   border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-  font-weight: bold;
+  gap: 12px;
 }
 
+/* GOOGLE ICON */
 .google-icon {
+  height: 22px;
   width: 22px;
 }
 
-/* Bottom text – smaller gap */
-.bottom-text {
+/* Login link */
+.login-link {
   text-align: center;
-  margin-top: 14px;   /* reduced */
+  margin-top: 14px;
   color: #9ca3af;
 }
-
-.bottom-text a {
+.login-link a {
   color: #38bdf8;
-  font-weight: bold;
-}
-
-/* Error */
-.error-text {
-  color: #ef4444;
-  margin-bottom: 8px;
+  text-decoration: none;
 }
