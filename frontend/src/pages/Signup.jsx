@@ -41,9 +41,8 @@ const Signup = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
 
-      // ⭐ STEP 5 — Mark logged in + reset attempts
+      // ✅ IMPORTANT: Mark user as logged in
       localStorage.setItem("userLoggedIn", "true");
-      localStorage.removeItem("quick_attempts");
 
       navigate("/dashboard");
     } catch (err) {
@@ -55,9 +54,8 @@ const Signup = () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
 
-      // ⭐ STEP 5 — After Google Sign Up too
+      // ✅ Google login → mark logged in
       localStorage.setItem("userLoggedIn", "true");
-      localStorage.removeItem("quick_attempts");
 
       navigate("/dashboard");
     } catch (err) {
@@ -114,11 +112,7 @@ const Signup = () => {
         </button>
 
         <button type="button" className="google-btn" onClick={handleGoogleSignup}>
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            className="google-icon"
-          />
+          <img src="/google.png" alt="Google" className="google-icon" />
           Continue with Google
         </button>
 

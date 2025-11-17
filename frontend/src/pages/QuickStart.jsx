@@ -7,38 +7,24 @@ const QuickStart = () => {
   const MAX_ATTEMPTS = 7;
 
   useEffect(() => {
-    const storedAttempts = Number(localStorage.getItem("quick_attempts")) || 0;
-    setAttempts(storedAttempts);
-
-    const isLoggedIn = localStorage.getItem("userLoggedIn");
-
-    // ⭐ FIX FOR OPTION B:
-    // If user logged in (from signup OR login) reset attempts
-    if (isLoggedIn === "true") {
-      localStorage.removeItem("quick_attempts");
-      setAttempts(0);
-    }
+    const stored = Number(localStorage.getItem("quick_attempts")) || 0;
+    setAttempts(stored);
   }, []);
 
   const handleQuickStart = () => {
     const isLoggedIn = localStorage.getItem("userLoggedIn");
 
-    // ⭐ MAIN FIX: If flag true → unlimited usage
     if (isLoggedIn === "true") {
-      console.log("Logged-in → unlimited access.");
       return;
     }
 
-    // Not logged in → 7 free attempts
     if (attempts < MAX_ATTEMPTS) {
-      const newCount = attempts + 1;
-      localStorage.setItem("quick_attempts", newCount);
-      setAttempts(newCount);
-      console.log("Free attempt used:", newCount);
+      const next = attempts + 1;
+      setAttempts(next);
+      localStorage.setItem("quick_attempts", next);
       return;
     }
 
-    // After 7 → popup
     setShowPopup(true);
   };
 
@@ -52,9 +38,9 @@ const QuickStart = () => {
           padding: "25px",
           borderRadius: "15px",
           background: "rgba(255,255,255,0.1)",
-          boxShadow: "0 0 20px rgba(180,0,255,0.5)",
+          boxShadow: "0 0 25px rgba(180,0,255,0.5)",
           cursor: "pointer",
-          width: "320px",
+          width: "330px",
           margin: "20px auto",
           color: "white"
         }}
@@ -62,6 +48,16 @@ const QuickStart = () => {
         <h3 style={{ fontSize: "24px", color: "#d46bff" }}>Quick Start</h3>
         <p style={{ fontSize: "16px", color: "#bbbbe0" }}>
           Capture, extract, and understand — all from your dashboard.
+        </p>
+
+        {/* COUNTER */}
+        <p style={{ 
+          marginTop: "10px", 
+          fontSize: "15px", 
+          fontWeight: "bold", 
+          color: "#a1ffa1"
+        }}>
+          Free uses left: {MAX_ATTEMPTS - attempts} / {MAX_ATTEMPTS}
         </p>
       </div>
     </>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Login.css";
+import "./Login.css";   
 import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
@@ -22,9 +22,8 @@ const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      // ⭐ STEP 4 — After login reset attempts
+      // ✅ Mark user as logged in
       localStorage.setItem("userLoggedIn", "true");
-      localStorage.removeItem("quick_attempts");
 
       navigate("/dashboard");
     } catch (err) {
@@ -36,9 +35,8 @@ const Login = () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider());
 
-      // ⭐ STEP 4 — After Google login also
+      // ✅ Google login → mark logged in
       localStorage.setItem("userLoggedIn", "true");
-      localStorage.removeItem("quick_attempts");
 
       navigate("/dashboard");
     } catch (err) {

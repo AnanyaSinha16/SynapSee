@@ -1,33 +1,12 @@
 .navbar {
-    width: 100%;
-    padding: 12px 0;
-    display: flex;
-    justify-content: center;
-    gap: 26px;
-    background: transparent;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 20;
-}
-
-.navbar a {
-    color: white;
-    padding: 10px 24px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    text-decoration: none;
-    transition: 0.25s ease;
-}
-
-.navbar a:hover {
-    background: rgba(56, 189, 248, 0.25);
-    box-shadow: 0 0 12px rgba(0, 200, 255, 0.4);
-}
-
-.navbar .active {
-    background: rgba(56, 189, 248, 0.35);
-    box-shadow: 0 0 18px rgba(0, 200, 255, 0.45);
-    border-color: rgba(56, 189, 248, 0.6);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;         /* added */
+  top: 0;                  /* added */
+  left: 0;                 /* added */
+  z-index: 999;            /* added */
+  background: rgba(10, 10, 25, 0.9); /* matches your UI */
+  backdrop-filter: blur(10px);
 }
