@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
@@ -22,13 +21,8 @@ const OcrDashboard = () => {
   const [freeLeft, setFreeLeft] = useState(7);
   const inputRef = useRef(null);
 
-  // ============================
-  // 🌟 FREE SCAN LIMIT CHECK
-  // ============================
   const checkFreeLimit = () => {
     const user = auth.currentUser;
-
-    // Logged in → unlimited scans
     if (user) return true;
 
     let count = localStorage.getItem("free_scans");
@@ -46,20 +40,12 @@ const OcrDashboard = () => {
     return true;
   };
 
-  // ============================
-  // 🌟 Load free scan counter on mount
-  // ============================
   useEffect(() => {
-    const handleMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", handleMove);
-
-    // Get remaining free scans (only for guests)
     if (!auth.currentUser) {
       const count = Number(localStorage.getItem("free_scans")) || 0;
       setFreeLeft(7 - count);
     }
 
-    // Handle Paste (Ctrl + V)
     const handlePaste = (e) => {
       if (e.clipboardData && e.clipboardData.items) {
         for (let i = 0; i < e.clipboardData.items.length; i++) {
@@ -76,24 +62,14 @@ const OcrDashboard = () => {
     };
 
     window.addEventListener("paste", handlePaste);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("paste", handlePaste);
-    };
+    return () => window.removeEventListener("paste", handlePaste);
   }, []);
 
-  // ============================
-  // 🌟 Upload
-  // ============================
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) setImage(URL.createObjectURL(file));
   };
 
-  // ============================
-  // 🌟 Drag-drop
-  // ============================
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -116,12 +92,8 @@ const OcrDashboard = () => {
     }
   };
 
-  // ============================
-  // 🌟 OCR Scan
-  // ============================
   const handleScan = async () => {
     if (!checkFreeLimit()) return;
-
     if (!image) return alert("Please upload an image first!");
 
     setLoading(true);
@@ -143,13 +115,13 @@ const OcrDashboard = () => {
 
   return (
     <motion.div
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
+      className="relative min-h-screen flex flex-col items-center justify-start pt-32 overflow-hidden bg-gradient-to-b from-[#120024] via-[#090014] to-black text-white"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
       onDragEnter={handleDrag}
     >
-      {/* 🔮 Background Particles */}
+      {/* Background particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -158,13 +130,7 @@ const OcrDashboard = () => {
           fpsLimit: 60,
           particles: {
             color: { value: ["#00ffff", "#b026ff"] },
-            links: {
-              color: "#00ffff",
-              distance: 130,
-              enable: true,
-              opacity: 0.15,
-              width: 0.7,
-            },
+            links: { color: "#00ffff", distance: 130, enable: true, opacity: 0.15, width: 0.7 },
             move: { enable: true, speed: 0.6 },
             number: { value: 45 },
             opacity: { value: 0.35 },
@@ -180,34 +146,33 @@ const OcrDashboard = () => {
         className="absolute inset-0 z-0"
       />
 
-      {/* 🔥 Title */}
-      <h1 className="text-4xl sm:text-5xl font-extrabold mb-8 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent relative z-10">
+      {/* Title */}
+      <h1 className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent relative z-10">
         SynapSee OCR Dashboard
       </h1>
 
-      {/* Free Scans Left */}
+      {/* FREE SCAN TEXT */}
       {!auth.currentUser && (
-        <p className="text-red-400 mb-2 relative z-10">
+        <p className="text-red-400 mb-6 text-lg relative z-10">
           Free scans left: {freeLeft} / 7
         </p>
       )}
 
-      {/* 📤 Upload Box */}
+      {/* Upload Box */}
       <motion.div
         className={`relative z-10 bg-white/10 backdrop-blur-lg border ${
           dragActive ? "border-[#00ffff]" : "border-teal-400/20"
-        } shadow-[0_0_25px_#00ffff22] p-6 sm:p-10 rounded-3xl text-center max-w-lg w-[90%] transition-all`}
-        whileHover={{ scale: 1.02 }}
+        } p-6 sm:p-10 rounded-3xl text-center max-w-lg w-[90%] shadow-[0_0_25px_#00ffff22]`}
+        whileHover={{ scale: 1.03 }}
         onDrop={handleDrop}
         onDragOver={handleDrag}
         onDragLeave={handleDrag}
         onClick={() => inputRef.current.click()}
       >
-        <h3 className="text-xl font-semibold text-[#00ffff] mb-2">
+        <h3 className="text-xl font-semibold text-[#00ffff] mb-4">
           Upload / Drag-Drop / Paste (Ctrl + V)
         </h3>
 
-        {/* Hidden input */}
         <input
           ref={inputRef}
           type="file"
@@ -216,12 +181,10 @@ const OcrDashboard = () => {
           className="hidden"
         />
 
-        {/* Paste message */}
         {pasteMessage && (
           <p className="text-green-400 text-sm mb-2">📋 Image pasted!</p>
         )}
 
-        {/* Button */}
         <motion.button
           onClick={handleScan}
           disabled={loading}
@@ -230,12 +193,11 @@ const OcrDashboard = () => {
               ? "bg-gray-500 cursor-not-allowed"
               : "bg-gradient-to-r from-[#00ffff] to-[#b026ff]"
           } text-white font-semibold`}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: loading ? 1 : 1.05 }}
         >
           {loading ? "Scanning..." : "Start Scanning"}
         </motion.button>
 
-        {/* Image Preview */}
         {image && (
           <motion.div
             className="mt-6 flex justify-center"
@@ -251,7 +213,7 @@ const OcrDashboard = () => {
         )}
       </motion.div>
 
-      {/* 📝 Extracted Text */}
+      {/* Extracted Text */}
       {extractedText && (
         <motion.div
           className="relative z-10 mt-8 bg-white/10 backdrop-blur-lg border border-purple-400/20 p-6 rounded-3xl max-w-3xl w-[90%] text-left max-h-96 overflow-auto"
