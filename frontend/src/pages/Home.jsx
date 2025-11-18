@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
@@ -14,30 +13,23 @@ const Home = () => {
   const navigate = useNavigate();
   const auth = getAuth();
 
-  // 🟢 If user is logged in → show recent activity
-  // 🔴 If not logged in → redirect to login
   const handleRecentActivity = () => {
     const user = auth.currentUser;
-    if (!user) {
-      navigate("/login");
-    } else {
-      navigate("/recent-activity");
-    }
+    if (!user) navigate("/login");
+    else navigate("/recent-activity");
   };
 
-  // 🔥 FIXED — correctly opens the OCR Dashboard page
   const handleQuickStart = () => {
     navigate("/ocr-dashboard");
   };
 
   return (
     <motion.div
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#0a0015] via-[#120025] to-black text-white relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-start pt-24 bg-gradient-to-b from-[#0a0015] via-[#120025] to-black text-white relative overflow-hidden"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeInOut" }}
     >
-      {/* ✨ Background Particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -68,7 +60,6 @@ const Home = () => {
         }}
       />
 
-      {/* 🧠 HERO TEXT */}
       <motion.h1
         className="text-5xl sm:text-6xl font-extrabold mb-4 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent text-center relative z-10"
         initial={{ opacity: 0, y: -20 }}
@@ -87,34 +78,29 @@ const Home = () => {
         Your intelligent vision companion — where AI meets simplicity.
       </motion.p>
 
-      {/* 🔹 Feature Cards */}
       <motion.div
         className="flex flex-col sm:flex-row gap-6 relative z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        {/* 🟢 RECENT ACTIVITY */}
+        {/* Recent Activity */}
         <div
           onClick={handleRecentActivity}
           className="p-8 bg-white/10 backdrop-blur-lg border border-[#00ffff33] rounded-2xl w-80 text-left hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_25px_#00ffff55] cursor-pointer"
         >
-          <h3 className="text-xl font-bold text-[#00ffff] hover:text-[#00ffffaa] transition-all duration-300">
-            Recent Activity
-          </h3>
+          <h3 className="text-xl font-bold text-[#00ffff]">Recent Activity</h3>
           <p className="text-gray-300 text-sm mt-2">
             View your recent OCR scans and AI responses here.
           </p>
         </div>
 
-        {/* 🟣 QUICK START */}
+        {/* Quick Start */}
         <div
           onClick={handleQuickStart}
           className="p-8 bg-white/10 backdrop-blur-lg border border-[#b026ff33] rounded-2xl w-80 text-left hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_25px_#b026ffaa] cursor-pointer"
         >
-          <h3 className="text-xl font-bold text-[#b026ff] hover:text-[#b026ffaa] transition-all duration-300">
-            Quick Start
-          </h3>
+          <h3 className="text-xl font-bold text-[#b026ff]">Quick Start</h3>
           <p className="text-gray-300 text-sm mt-2">
             Capture, extract, and understand — all from your dashboard.
           </p>
