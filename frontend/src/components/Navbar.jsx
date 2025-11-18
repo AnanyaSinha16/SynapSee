@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
+import "./Navbar.css";   // <-- IMPORTANT
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -36,9 +37,7 @@ const Navbar = () => {
             {openMenu && (
               <div className="profile-menu">
                 <p className="email">{user.email}</p>
-                <button onClick={handleLogout} className="logout-btn">
-                  Logout
-                </button>
+                <button onClick={handleLogout} className="logout-btn">Logout</button>
               </div>
             )}
           </li>

@@ -1,12 +1,77 @@
+/* Navbar container */
 .navbar {
   width: 100%;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
-  justify-content: center;
-  padding: 20px;
-  position: fixed;         /* added */
-  top: 0;                  /* added */
-  left: 0;                 /* added */
-  z-index: 999;            /* added */
-  background: rgba(10, 10, 25, 0.9); /* matches your UI */
-  backdrop-filter: blur(10px);
+  justify-content: center;   /* centers the nav menu */
+  z-index: 1000;
+  background: transparent;
+}
+
+/* Navigation Links Container */
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Each link */
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* Profile wrapper */
+.profile-wrapper {
+  position: relative;
+}
+
+/* Profile image */
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+/* Dropdown menu */
+.profile-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #151515;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #555;
+  width: 180px;
+}
+
+.profile-menu .email {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid #ff4d4d;
+  color: #ff4d4d;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #ff4d4d;
+  color: black;
 }
