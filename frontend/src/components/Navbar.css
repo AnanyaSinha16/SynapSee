@@ -1,77 +1,82 @@
-/* Navbar container */
 .navbar {
   width: 100%;
-  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
   position: fixed;
   top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;   /* centers the nav menu */
-  z-index: 1000;
+  z-index: 100;
   background: transparent;
 }
 
-/* Navigation Links Container */
 .nav-links {
   display: flex;
-  gap: 40px;
+  gap: 30px;
   list-style: none;
   align-items: center;
-  margin: 0;
-  padding: 0;
 }
 
-/* Each link */
-.nav-links a {
+/* Glowing rounded nav tabs */
+.nav-tab {
   text-decoration: none;
   color: white;
-  font-size: 20px;
-  font-weight: 500;
+  padding: 10px 26px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  transition: 0.3s ease;
 }
 
-/* Profile wrapper */
+.nav-tab:hover {
+  box-shadow: 0 0 15px #7a4bff, 0 0 25px #b56bff;
+  transform: translateY(-2px);
+}
+
+/* PROFILE SECTION */
 .profile-wrapper {
   position: relative;
 }
 
-/* Profile image */
 .profile-icon {
-  width: 40px;
-  height: 40px;
+  width: 43px;
+  height: 43px;
   border-radius: 50%;
-  cursor: pointer;
   border: 2px solid white;
+  cursor: pointer;
   object-fit: cover;
 }
 
-/* Dropdown menu */
 .profile-menu {
   position: absolute;
-  top: 50px;
+  top: 60px;
   right: 0;
-  background: #151515;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #555;
-  width: 180px;
+  background: rgba(15, 15, 25, 0.95);
+  padding: 15px;
+  border-radius: 12px;
+  width: 200px;
+  border: 1px solid #444;
+  box-shadow: 0 0 12px rgba(150, 70, 255, 0.4);
 }
 
-.profile-menu .email {
+.email {
+  color: #ddd;
   font-size: 14px;
-  color: #ccc;
+  margin-bottom: 12px;
 }
 
 .logout-btn {
   width: 100%;
-  padding: 8px;
-  background: transparent;
-  border: 1px solid #ff4d4d;
-  color: #ff4d4d;
+  padding: 9px;
   border-radius: 8px;
   cursor: pointer;
+  background: transparent;
+  border: 1px solid #ff5555;
+  color: #ff5555;
 }
 
 .logout-btn:hover {
-  background: #ff4d4d;
+  background: #ff5555;
   color: black;
 }
