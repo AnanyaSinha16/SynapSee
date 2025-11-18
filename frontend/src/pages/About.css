@@ -1,0 +1,65 @@
+.about-section {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.about-title {
+  font-size: 3.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00ffff, #b026ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.about-text {
+  color: #ccc;
+  font-size: 1.2rem;
+  max-width: 900px;
+  margin: 0 auto 40px auto;
+  line-height: 1.6;
+}
+
+.about-cards {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 35px;
+  margin-top: 20px;
+}
+
+.about-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(176, 38, 255, 0.25);
+  width: 380px;
+  min-height: 200px;
+  padding: 25px 30px;
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-card h3 {
+  font-size: 1.7rem;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.about-card p {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #d1d1d1;
+}
+
+/* Vision color */
+.about-card.vision h3 {
+  color: #00ffff;
+}
+
+/* Mission color */
+.about-card.mission h3 {
+  color: #b026ff;
+}
