@@ -100,3 +100,17 @@
   white-space: normal;        /* allow wrap */
   max-width: 180px;           /* fit inside box */
 }
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid white;
+  cursor: pointer;
+  object-fit: cover;
+}

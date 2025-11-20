@@ -1,46 +1,48 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-function generateToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-}
-
-router.post("/register", async (req, res) => {
+// Signup
+router.post("/signup", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
-    let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: "User already exists" });
+    const exists = await User.findOne({ email });
+    if (exists) return res.json({ error: "User already exists" });
 
     const hashed = await bcrypt.hash(password, 10);
 
-    user = await User.create({ name, email, password: hashed });
+    const user = new User({ email, password: hashed });
+    await user.save();
 
-    res.json({ token: generateToken(user._id), user });
+    res.json({ message: "Account created" });
   } catch (err) {
-    res.status(500).json({ msg: "Server error" });
+    res.json({ error: err.message });
   }
 });
 
-
+// Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: "User does not exist" });
+    if (!user) return res.json({ error: "User not found" });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ msg: "Incorrect password" });
+    if (!match) return res.json({ error: "Wrong password" });
 
-    res.json({ token: generateToken(user._id), user });
-  } catch (error) {
-    res.status(500).json({ msg: "Server error" });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.json({ token, user });
+  } catch (err) {
+    res.json({ error: err.message });
   }
 });
 
-module.exports = router;
+export default router;
