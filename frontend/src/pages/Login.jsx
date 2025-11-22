@@ -1,96 +1,53 @@
 import React, { useState } from "react";
-import "./Login.css";   
-import { auth } from "../firebase";
-import {
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Login = () => {
-  const navigate = useNavigate();
-
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
 
-      // ✅ Mark user as logged in
-      localStorage.setItem("userLoggedIn", "true");
-
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
-
-      // ✅ Google login → mark logged in
-      localStorage.setItem("userLoggedIn", "true");
-
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.message);
+      alert("Login successful!");
+      localStorage.setItem("synapseeUser", JSON.stringify(res.data.user));
+      window.location.href = "/";
+    } catch (error) {
+      alert("Login failed");
+      console.error(error);
     }
   };
 
   return (
-    <div className="login-page fade-in">
-      <div className="login-card glow-border">
-        <h2>Welcome Back</h2>
-        <p>Login to your SynapSee account</p>
+    <div className="min-h-screen flex items-center justify-center bg-black text-white">
+      <form onSubmit={handleLogin} className="p-8 bg-white/10 rounded-xl">
+        <h2 className="text-xl mb-4 font-semibold">Login</h2>
 
-        {error && <p className="error-text">{error}</p>}
+        <input
+          type="email"
+          placeholder="Email"
+          className="p-2 mb-3 w-full text-black"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        <form onSubmit={handleLogin}>
-          <input
-            className="login-input"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <input
+          type="password"
+          placeholder="Password"
+          className="p-2 mb-3 w-full text-black"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          <input
-            className="login-input"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <button className="login-btn" type="submit">
-            Login
-          </button>
-        </form>
-
-        <button className="google-login-btn" onClick={handleGoogleLogin}>
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            className="google-icon"
-          />
-          Continue with Google
+        <button className="bg-purple-600 px-4 py-2 rounded-lg w-full">
+          Login
         </button>
-
-        <p className="bottom-text">
-          Don’t have an account? <Link to="/signup">Sign Up</Link>
-        </p>
-      </div>
+      </form>
     </div>
   );
-};
+}
 
 export default Login;

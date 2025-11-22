@@ -1,18 +1,9 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
 
 const ProtectedRoute = ({ children }) => {
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const token = localStorage.getItem("token");
 
-  // ✅ If not logged in, redirect to login page
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // ✅ Else allow access
-  return children;
+  return token ? children : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;
