@@ -3,14 +3,12 @@ import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 // remove client-side Tesseract import (we'll call backend)
-import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api"; // <-- axios instance
 
 const OcrDashboard = () => {
   const particlesInit = async (main) => await loadFull(main);
-  const auth = getAuth();
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const [image, setImage] = useState(null);
   const [extractedText, setExtractedText] = useState("");

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+
 
 const Home = () => {
   const particlesInit = async (main) => {
@@ -11,7 +11,6 @@ const Home = () => {
   };
 
   const navigate = useNavigate();
-  const auth = getAuth();
 
   const handleRecentActivity = () => {
     const user = auth.currentUser;
