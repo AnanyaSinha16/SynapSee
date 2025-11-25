@@ -1,112 +1,138 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import { useNavigate } from "react-router-dom";
 
-
-const Home = () => {
-  const particlesInit = async (main) => {
-    await loadFull(main);
-  };
-
-  const navigate = useNavigate();
-
-  const handleRecentActivity = () => {
-    const user = auth.currentUser;
-    if (!user) navigate("/login");
-    else navigate("/recent-activity");
-  };
-
-  const handleQuickStart = () => {
-    navigate("/ocr-dashboard");
-  };
+export default function Home() {
+  const particlesInit = useCallback(async (engine) => {
+    await loadFull(engine); // FIXES engine.checkVersion error
+  }, []);
 
   return (
-    <motion.div
-      className="min-h-screen flex flex-col items-center justify-start pt-24 bg-gradient-to-b from-[#0a0015] via-[#120025] to-black text-white relative overflow-hidden"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(180deg, #0A0014, #120025)",
+        padding: "60px 40px",
+        color: "white",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
+      {/* Particles Background */}
       <Particles
         id="tsparticles"
         init={particlesInit}
-        className="absolute inset-0 z-0"
         options={{
           fullScreen: { enable: false },
-          fpsLimit: 60,
           particles: {
-            color: { value: ["#00ffff", "#b026ff"] },
+            number: { value: 60 },
+            size: { value: 2 },
+            move: { enable: true, speed: 0.4 },
             links: {
-              color: "#00ffff",
-              distance: 130,
               enable: true,
-              opacity: 0.15,
-              width: 0.7,
+              color: "#ffffff55",
+              distance: 120,
             },
-            move: { enable: true, speed: 0.7 },
-            number: { value: 45 },
-            opacity: { value: 0.35 },
-            shape: { type: "circle" },
-            size: { value: { min: 1, max: 3 } },
+            color: { value: ["#06b6d4", "#a855f7"] },
           },
-          interactivity: {
-            events: { onHover: { enable: true, mode: "repulse" }, resize: true },
-            modes: { repulse: { distance: 120, duration: 0.4 } },
-          },
-          detectRetina: true,
+        }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
         }}
       />
 
-      <motion.h1
-        className="text-5xl sm:text-6xl font-extrabold mb-4 bg-gradient-to-r from-[#00ffff] to-[#b026ff] bg-clip-text text-transparent text-center relative z-10"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Welcome to SynapSee
-      </motion.h1>
-
-      <motion.p
-        className="text-lg sm:text-xl text-gray-300 mb-10 text-center max-w-2xl relative z-10"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        Your intelligent vision companion — where AI meets simplicity.
-      </motion.p>
-
-      <motion.div
-        className="flex flex-col sm:flex-row gap-6 relative z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {/* Recent Activity */}
-        <div
-          onClick={handleRecentActivity}
-          className="p-8 bg-white/10 backdrop-blur-lg border border-[#00ffff33] rounded-2xl w-80 text-left hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_25px_#00ffff55] cursor-pointer"
+      {/* CONTENT */}
+      <div style={{ position: "relative", zIndex: 2 }}>
+        {/* Header */}
+        <h1
+          style={{
+            fontSize: "64px",
+            fontWeight: "700",
+            marginBottom: "10px",
+            letterSpacing: "1px",
+            background: "linear-gradient(90deg, #06b6d4, #a855f7)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
         >
-          <h3 className="text-xl font-bold text-[#00ffff]">Recent Activity</h3>
-          <p className="text-gray-300 text-sm mt-2">
-            View your recent OCR scans and AI responses here.
-          </p>
-        </div>
+          Welcome to SynapSee
+        </h1>
 
-        {/* Quick Start */}
-        <div
-          onClick={handleQuickStart}
-          className="p-8 bg-white/10 backdrop-blur-lg border border-[#b026ff33] rounded-2xl w-80 text-left hover:scale-105 transition-transform duration-300 hover:shadow-[0_0_25px_#b026ffaa] cursor-pointer"
+        <p
+          style={{
+            fontSize: "20px",
+            color: "#d1d5db",
+            marginTop: "5px",
+            marginBottom: "50px",
+          }}
         >
-          <h3 className="text-xl font-bold text-[#b026ff]">Quick Start</h3>
-          <p className="text-gray-300 text-sm mt-2">
-            Capture, extract, and understand — all from your dashboard.
-          </p>
+          Your intelligent vision companion — where AI meets simplicity.
+        </p>
+
+        {/* Cards Container */}
+        <div
+          style={{
+            display: "flex",
+            gap: "40px",
+            marginTop: "30px",
+            flexWrap: "wrap",
+          }}
+        >
+          {/* Card 1 */}
+          <div
+            style={{
+              flex: "1",
+              minWidth: "320px",
+              padding: "30px",
+              background: "rgba(255,255,255,0.05)",
+              borderRadius: "16px",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: "10px",
+                fontSize: "26px",
+                color: "#06b6d4",
+              }}
+            >
+              Recent Activity
+            </h2>
+            <p style={{ color: "#e2e8f0", fontSize: "16px" }}>
+              View your recent OCR scans and AI responses here.
+            </p>
+          </div>
+
+          {/* Card 2 */}
+          <div
+            style={{
+              flex: "1",
+              minWidth: "320px",
+              padding: "30px",
+              background: "rgba(255,255,255,0.05)",
+              borderRadius: "16px",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: "10px",
+                fontSize: "26px",
+                color: "#a855f7",
+              }}
+            >
+              Quick Start
+            </h2>
+            <p style={{ color: "#e2e8f0", fontSize: "16px" }}>
+              Capture, extract, and understand — all from your dashboard.
+            </p>
+          </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
-};
-
-export default Home;
+}
