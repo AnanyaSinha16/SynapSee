@@ -1,137 +1,36 @@
-import React, { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-
 export default function Home() {
-  const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine); // FIXES engine.checkVersion error
-  }, []);
-
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #0A0014, #120025)",
-        padding: "60px 40px",
-        color: "white",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Particles Background */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          fullScreen: { enable: false },
-          particles: {
-            number: { value: 60 },
-            size: { value: 2 },
-            move: { enable: true, speed: 0.4 },
-            links: {
-              enable: true,
-              color: "#ffffff55",
-              distance: 120,
-            },
-            color: { value: ["#06b6d4", "#a855f7"] },
-          },
-        }}
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0,
-        }}
-      />
-
-      {/* CONTENT */}
-      <div style={{ position: "relative", zIndex: 2 }}>
-        {/* Header */}
-        <h1
-          style={{
-            fontSize: "64px",
-            fontWeight: "700",
-            marginBottom: "10px",
-            letterSpacing: "1px",
-            background: "linear-gradient(90deg, #06b6d4, #a855f7)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#0b001a] to-[#000] text-white flex flex-col justify-center items-center px-6 py-20">
+      
+      {/* Heading */}
+      <div className="text-center mb-16">
+        <h1 className="text-5xl font-bold text-[#76a7ff] drop-shadow-lg">
           Welcome to SynapSee
         </h1>
-
-        <p
-          style={{
-            fontSize: "20px",
-            color: "#d1d5db",
-            marginTop: "5px",
-            marginBottom: "50px",
-          }}
-        >
+        <p className="text-gray-300 mt-4 text-lg max-w-2xl">
           Your intelligent vision companion — where AI meets simplicity.
         </p>
+      </div>
 
-        {/* Cards Container */}
-        <div
-          style={{
-            display: "flex",
-            gap: "40px",
-            marginTop: "30px",
-            flexWrap: "wrap",
-          }}
-        >
-          {/* Card 1 */}
-          <div
-            style={{
-              flex: "1",
-              minWidth: "320px",
-              padding: "30px",
-              background: "rgba(255,255,255,0.05)",
-              borderRadius: "16px",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.1)",
-            }}
-          >
-            <h2
-              style={{
-                marginBottom: "10px",
-                fontSize: "26px",
-                color: "#06b6d4",
-              }}
-            >
-              Recent Activity
-            </h2>
-            <p style={{ color: "#e2e8f0", fontSize: "16px" }}>
-              View your recent OCR scans and AI responses here.
-            </p>
-          </div>
-
-          {/* Card 2 */}
-          <div
-            style={{
-              flex: "1",
-              minWidth: "320px",
-              padding: "30px",
-              background: "rgba(255,255,255,0.05)",
-              borderRadius: "16px",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.1)",
-            }}
-          >
-            <h2
-              style={{
-                marginBottom: "10px",
-                fontSize: "26px",
-                color: "#a855f7",
-              }}
-            >
-              Quick Start
-            </h2>
-            <p style={{ color: "#e2e8f0", fontSize: "16px" }}>
-              Capture, extract, and understand — all from your dashboard.
-            </p>
-          </div>
+      {/* Cards grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-5xl">
+        
+        {/* Recent Activity */}
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl hover:bg-white/10 transition">
+          <h2 className="text-2xl font-semibold text-[#5bb0ff]">Recent Activity</h2>
+          <p className="text-gray-300 mt-3">
+            View your recent OCR scans and AI responses here.
+          </p>
         </div>
+
+        {/* Quick Start */}
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl hover:bg-white/10 transition">
+          <h2 className="text-2xl font-semibold text-purple-400">Quick Start</h2>
+          <p className="text-gray-300 mt-3">
+            Capture, extract, and understand — all from your dashboard.
+          </p>
+        </div>
+
       </div>
     </div>
   );
