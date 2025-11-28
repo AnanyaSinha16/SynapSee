@@ -1,41 +1,9 @@
-import React, { useState, useRef } from "react";
-
-const Navbar = () => {
-  const [profileImage, setProfileImage] = useState(null);
-  const fileInputRef = useRef(null);
-
-  const handleImageClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const imageURL = URL.createObjectURL(file);
-    setProfileImage(imageURL);
-  };
-
+export default function Navbar() {
   return (
-    <nav className="navbar">
-      <div className="profile-container">
-        <img
-          src={profileImage || "/default-avatar.png"}
-          alt="Profile"
-          className="profile-image"
-          onClick={handleImageClick}
-        />
-
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          className="hidden"
-          onChange={handleImageChange}
-        />
-      </div>
+    <nav className="w-full bg-black/40 backdrop-blur-xl fixed top-0 left-0 z-50 py-4 px-8 border-b border-white/10">
+      <h1 className="text-2xl font-bold text-white tracking-wide">
+        SynapSee
+      </h1>
     </nav>
   );
-};
-
-export default Navbar;
+}

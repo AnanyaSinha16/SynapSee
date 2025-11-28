@@ -1,26 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import OcrDashboard from "./pages/OcrDashboard";
-import About from "./pages/About";
-import RecentActivity from "./pages/RecentActivity";
+import History from "./pages/History";
+import Upload from "./pages/Upload";
+import Scanner from "./pages/Scanner";
+import ApiTest from "./pages/ApiTest";
+import Navbar from "./components/Navbar";
 
-function App() {
+export default function App() {
   return (
-    <Router>
+    <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/ocr-dashboard" element={<OcrDashboard />} />
-        <Route path="/recent-activity" element={<RecentActivity />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/scanner" element={<Scanner />} />
+        <Route path="/upload" element={<Upload />} />
+        <Route path="/api-test" element={<ApiTest />} />
       </Routes>
-    </Router>
+    </>
   );
 }
-
-export default App;
