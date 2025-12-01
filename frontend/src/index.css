@@ -1,24 +1,67 @@
-/* frontend/src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* custom */
-:root {
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --muted: #6b7280;
-  --accent: #6366f1;
-}
-
-.dark {
-  --bg: #0b1220;
-  --card: #081022;
-  --muted: #9aa4b2;
-  --accent: #7c3aed;
-}
+/* === PURPLE NEON ANIMATED BACKGROUND === */
 
 body {
-  background: linear-gradient(180deg, var(--bg), transparent);
-  color: inherit;
+  background: radial-gradient(circle at 30% 20%, #5b00ff, #140032 70%);
+  background-size: 200% 200%;
+  animation: bgMove 8s ease-in-out infinite;
+  font-family: Inter, sans-serif;
+  overflow-x: hidden;
+}
+
+/* background animation */
+@keyframes bgMove {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* === NEON CARD STYLE === */
+.neon-card {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 24px;
+  transition: 0.25s ease;
+  box-shadow: 0 0 15px rgba(187, 0, 255, 0.25);
+}
+
+.neon-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(187, 0, 255, 0.55);
+}
+
+/* button neon */
+.neon-btn {
+  background: linear-gradient(90deg, #8a2eff, #d400ff);
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: white;
+  transition: 0.2s;
+  box-shadow: 0 0 10px rgba(183, 0, 255, 0.5);
+}
+
+.neon-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 20px rgba(205, 0, 255, 0.85);
+}
+
+/* ===== CURSOR MOVING LIGHT EFFECT ===== */
+.mouse-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(200,0,255,0.35), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(50px);
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
