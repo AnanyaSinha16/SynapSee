@@ -1,7 +1,24 @@
+/* frontend/src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* custom */
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #6366f1;
+}
+
+.dark {
+  --bg: #0b1220;
+  --card: #081022;
+  --muted: #9aa4b2;
+  --accent: #7c3aed;
+}
+
 body {
-  background: #0a0a0a;
+  background: linear-gradient(180deg, var(--bg), transparent);
+  color: inherit;
 }
