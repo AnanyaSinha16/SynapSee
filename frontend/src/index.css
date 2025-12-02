@@ -2,66 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === PURPLE NEON ANIMATED BACKGROUND === */
+/* ===========================================
+   PERFECT SYNAPSEE BACKGROUND (MATCHES IMAGE)
+   =========================================== */
 
 body {
-  background: radial-gradient(circle at 30% 20%, #5b00ff, #140032 70%);
-  background-size: 200% 200%;
-  animation: bgMove 8s ease-in-out infinite;
-  font-family: Inter, sans-serif;
-  overflow-x: hidden;
-}
-
-/* background animation */
-@keyframes bgMove {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
-}
-
-/* === NEON CARD STYLE === */
-.neon-card {
-  backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  padding: 24px;
-  transition: 0.25s ease;
-  box-shadow: 0 0 15px rgba(187, 0, 255, 0.25);
-}
-
-.neon-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 25px rgba(187, 0, 255, 0.55);
-}
-
-/* button neon */
-.neon-btn {
-  background: linear-gradient(90deg, #8a2eff, #d400ff);
-  padding: 10px 18px;
-  border-radius: 10px;
+  margin: 0;
+  padding: 0;
   color: white;
-  transition: 0.2s;
-  box-shadow: 0 0 10px rgba(183, 0, 255, 0.5);
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+
+  background: radial-gradient(
+      circle at top center,
+      rgba(90, 0, 150, 0.25),
+      rgba(20, 0, 40, 1) 60%
+    ),
+    linear-gradient(
+      180deg,
+      #0a0017 0%,
+      #090016 40%,
+      #060013 100%
+    );
+
+  background-attachment: fixed;
 }
 
-.neon-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 0 20px rgba(205, 0, 255, 0.85);
+/* ===========================================
+   GRADIENT TITLE TEXT
+   =========================================== */
+
+.title-gradient {
+  font-size: 72px;
+  font-weight: 800;
+  text-align: center;
+  background: linear-gradient(90deg, #00eaff, #8b00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* ===== CURSOR MOVING LIGHT EFFECT ===== */
-.mouse-light {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(200,0,255,0.35), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  filter: blur(50px);
-  transform: translate(-50%, -50%);
-  z-index: 0;
+/* Subtitle */
+.subtitle {
+  text-align: center;
+  font-size: 20px;
+  color: #d4c8ff;
+  opacity: 0.85;
+  margin-top: -10px;
+  margin-bottom: 50px;
+}
+
+/* ===========================================
+   GLASS CARD COMPONENTS
+   =========================================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 28px;
+  width: 360px;
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(120, 0, 255, 0.15);
+  transition: 0.25s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 30px rgba(150, 0, 255, 0.30);
+}
+
+/* ===========================================
+   CARD ROW
+   =========================================== */
+.card-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  margin-top: 20px;
+  padding-bottom: 80px;
 }
