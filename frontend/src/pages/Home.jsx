@@ -1,61 +1,44 @@
+import React from "react";
+import "./Home.css"; // <-- keep your existing css file if any
+
 export default function Home() {
   return (
     <div
       style={{
-        paddingTop: "120px",
-        textAlign: "center",
         height: "100vh",
-        width: "100%",
-        background: "linear-gradient(135deg, #0a001f, #18002f)",
+        background: "linear-gradient(135deg, #0d001f, #19002e)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         position: "relative",
       }}
     >
-      {/* 🔹 Floating Navigation Tabs */}
-      <div
-        style={{
-          position: "absolute",
-          top: "30px",
-          right: "40px",
-          display: "flex",
-          gap: "20px",
-          backdropFilter: "blur(12px)",
-          background: "rgba(255, 255, 255, 0.1)",
-          padding: "10px 20px",
-          borderRadius: "20px",
-          border: "1px solid rgba(255,255,255,0.2)",
-        }}
-      >
-        <a style={linkStyle} href="/">Home</a>
-        <a style={linkStyle} href="/about">About</a>
-        <a style={linkStyle} href="/login">Login</a>
+
+      {/* ⭐ FLOATING TABS ⭐ */}
+      <div className="floating-tabs">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
       </div>
 
-      {/* Card */}
+      {/* ⭐ EXISTING CENTER CARD (unchanged) ⭐ */}
       <div
         style={{
-          margin: "0 auto",
-          width: "300px",
-          padding: "30px",
+          padding: "35px 60px",
+          borderRadius: "18px",
           background: "rgba(255, 255, 255, 0.08)",
-          borderRadius: "20px",
-          backdropFilter: "blur(15px)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
+          border: "1px solid rgba(255, 255, 255, 0.25)",
+          backdropFilter: "blur(12px)",
           color: "white",
+          textAlign: "center",
         }}
       >
-        <h1>Hi there 👋</h1>
-        <p>Welcome to SynapSee Home.</p>
+        <h2 style={{ marginBottom: "10px", fontSize: "28px" }}>
+          Hi there 👋
+        </h2>
+        <p style={{ marginTop: "0", fontSize: "16px", opacity: 0.9 }}>
+          Welcome to SynapSee Home.
+        </p>
       </div>
     </div>
   );
 }
-
-const linkStyle = {
-  color: "white",
-  fontSize: "16px",
-  textDecoration: "none",
-  fontWeight: "500",
-  cursor: "pointer",
-  transition: "0.3s",
-};
-
