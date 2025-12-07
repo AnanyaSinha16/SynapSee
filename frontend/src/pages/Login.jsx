@@ -1,104 +1,64 @@
-import React, { useState } from "react";
-import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  async function handleLogin(e) {
-    e.preventDefault();
-
-    try {
-      const res = await api.post("/auth/login", { email, password });
-
-      // Save user in local storage
-      localStorage.setItem("synapseeUser", JSON.stringify(res.data.user));
-
-      // Navigate to homepage
-      navigate("/");
-    } catch (err) {
-      alert("Login failed. Please check your email/password.");
-      console.error(err);
-    }
-  }
-
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Login</h1>
+    <div style={containerStyle}>
+      <div style={cardStyle}>
+        <h2>Login 🔐</h2>
 
-      <form onSubmit={handleLogin} style={styles.form}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={styles.input}
-          required
-        />
+        <input type="text" placeholder="Username" style={input} />
+        <input type="password" placeholder="Password" style={input} />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
-          required
-        />
+        <button style={btn}>Login</button>
 
-        <button type="submit" style={styles.button}>
-          Login
-        </button>
-      </form>
-
-      <p style={styles.signupText}>
-        Don't have an account?{" "}
-        <span
-          style={styles.link}
-          onClick={() => navigate("/signup")}
-        >
-          Sign Up
-        </span>
-      </p>
+        <p onClick={() => navigate("/")} style={backText}>
+          ⬅ Back to Home
+        </p>
+      </div>
     </div>
   );
 }
 
-// Inline simple styling
-const styles = {
-  container: {
-    width: "100%",
-    maxWidth: "400px",
-    margin: "80px auto",
-    textAlign: "center",
-  },
-  title: {
-    marginBottom: "20px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  },
-  input: {
-    padding: "10px",
-    fontSize: "16px",
-  },
-  button: {
-    padding: "10px",
-    fontSize: "18px",
-    cursor: "pointer",
-  },
-  signupText: {
-    marginTop: "15px",
-  },
-  link: {
-    color: "blue",
-    cursor: "pointer",
-    textDecoration: "underline",
-  },
+const containerStyle = {
+  height: "100vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  background: "radial-gradient(circle at top, #2a004f, #050010)",
 };
 
-export default Login;
+const cardStyle = {
+  padding: "30px 40px",
+  borderRadius: "20px",
+  background: "rgba(255,255,255,0.08)",
+  border: "1px solid rgba(255,255,255,0.3)",
+  backdropFilter: "blur(10px)",
+  color: "white",
+  textAlign: "center",
+  width: "300px",
+};
+
+const input = {
+  width: "100%",
+  padding: "10px",
+  margin: "10px 0",
+  borderRadius: "8px",
+  border: "none",
+};
+
+const btn = {
+  width: "100%",
+  padding: "10px",
+  borderRadius: "10px",
+  border: "none",
+  cursor: "pointer",
+  marginTop: "10px",
+};
+
+const backText = {
+  marginTop: "15px",
+  cursor: "pointer",
+  opacity: 0.7,
+};
