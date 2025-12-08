@@ -1,28 +1,135 @@
-/* ⭐ FLOATING TABS ⭐ */
-.floating-tabs {
-  position: fixed;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at top, #2a004f, #050008, #010002);
   display: flex;
-  gap: 20px;
-  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
-.floating-tabs a {
-  padding: 10px 22px;
-  border-radius: 25px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #fff;
-  text-decoration: none;
-  backdrop-filter: blur(12px);
+/* ✅ Glass AI Card */
+.synapsee-card {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: 0.25s ease-in-out;
+  backdrop-filter: blur(18px);
+  border-radius: 22px;
+  padding: 45px 60px;
+  text-align: center;
+  color: white;
+  position: relative;
+  box-shadow: 0 0 25px rgba(160, 0, 255, 0.4);
+  animation: glowPulse 3s infinite ease-in-out;
+  z-index: 5;
 }
 
-.floating-tabs a:hover {
-  background: rgba(255, 255, 255, 0.18);
-  transform: translateY(-3px);
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 20px rgba(160, 0, 255, 0.3); }
+  50% { box-shadow: 0 0 45px rgba(200, 0, 255, 0.8); }
+  100% { box-shadow: 0 0 20px rgba(160, 0, 255, 0.3); }
+}
+
+/* ✅ Gradient Title */
+.title-gradient {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #a855f7, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✅ Typewriter Effect */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #22d3ee;
+  width: fit-content;
+  margin: auto;
+  animation: typing 3s steps(22), blink 0.7s infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* ✅ Subtitle */
+.subtitle {
+  margin-top: 12px;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ✅ Button Group */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* ✅ Futuristic Buttons */
+.synapsee-btn {
+  padding: 12px 32px;
+  border-radius: 30px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #a000ff, #00f0ff);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(160, 0, 255, 0.6);
+}
+
+.synapsee-btn:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.9);
+}
+
+/* ✅ Floating AI Orbs */
+.orb {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.6;
+  animation: float 10s infinite ease-in-out;
+}
+
+.orb1 {
+  background: #a000ff;
+  top: 10%;
+  left: 18%;
+}
+
+.orb2 {
+  background: #00f0ff;
+  bottom: 15%;
+  right: 22%;
+}
+
+.orb3 {
+  background: #ff00aa;
+  top: 50%;
+  right: 8%;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-45px); }
+  100% { transform: translateY(0px); }
 }
