@@ -7,12 +7,9 @@ export default function Home() {
       <div className="orb orb2"></div>
       <div className="orb orb3"></div>
 
-      {/* Main Glass Card */}
+      {/* Glass AI Card */}
       <div className="synapsee-card">
-
-        <h1 className="title-gradient typewriter">
-          Welcome to SynapSee
-        </h1>
+        <h1 className="title-gradient">Welcome to SynapSee</h1>
 
         <p className="subtitle">
           Your intelligent vision companion — where AI meets simplicity.
@@ -22,8 +19,9 @@ export default function Home() {
           <button className="synapsee-btn">About</button>
           <button className="synapsee-btn">Login</button>
         </div>
-
       </div>
+
     </div>
   );
 }
+import Home from "./components/Home";
