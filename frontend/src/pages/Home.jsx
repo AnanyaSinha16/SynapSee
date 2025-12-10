@@ -1,5 +1,6 @@
 export default function Home() {
-  return (
+  return <h1>Home Page</h1>
+(
     <div className="home-container">
 
       {/* Floating Background Orbs */}
