@@ -25,4 +25,3 @@ export default function Home() {
     </div>
   );
 }
-import Home from "./pages/Home";
