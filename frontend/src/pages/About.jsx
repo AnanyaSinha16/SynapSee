@@ -13,7 +13,7 @@ export default function About() {
           everyone.
         </p>
 
-        <button onClick={() => navigate("/")} style={btn}>
+        <button onClick={() => navigate("/")} style={btnStyle}>
           ⬅ Back to Home
         </button>
       </div>
@@ -40,7 +40,7 @@ const cardStyle = {
   width: "400px",
 };
 
-const btn = {
+const btnStyle = {
   padding: "10px 22px",
   borderRadius: "12px",
   border: "none",
