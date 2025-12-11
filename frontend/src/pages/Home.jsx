@@ -25,4 +25,4 @@ export default function Home() {
     </div>
   );
 }
-import Home from "./components/Home";
+import Home from "./pages/Home";
