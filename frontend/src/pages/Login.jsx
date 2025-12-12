@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -11,46 +12,40 @@ export default function Login() {
   };
 
   return (
-    <div className="h-screen flex justify-center items-center bg-transparent pt-20 px-4">
-      <div className="w-full max-w-md glass-card p-8 rounded-2xl text-center">
+    <div className="login-container">
+      <div className="login-box">
 
-        <h2 className="text-white text-3xl font-semibold mb-2">
-          Login to <span className="text-cyan-300">SynapSee</span>
+        <h2 className="login-title">
+          Login to <span>SynapSee</span>
         </h2>
 
-        <p className="text-gray-300 text-sm mb-8">
+        <p className="login-subtitle">
           Access your intelligent vision dashboard
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email address"
-            className="input-box"
+            className="login-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
           <input
             type="password"
             placeholder="Password"
-            className="input-box"
+            className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
 
-          <button
-            type="submit"
-            className="login-btn"
-          >
-            Login
-          </button>
+          <button className="login-button">Login</button>
         </form>
 
-        <button
-          onClick={() => navigate("/")}
-          className="mt-6 border border-white/25 text-white px-5 py-2 rounded-xl hover:bg-white/20 transition"
-        >
+        <button className="back-button" onClick={() => navigate("/")}>
           ← Back to Home
         </button>
       </div>
