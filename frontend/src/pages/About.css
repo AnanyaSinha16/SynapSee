@@ -1,65 +1,67 @@
-.about-section {
-  margin-top: 50px;
+/* Centering the card */
+.about-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
+/* Glass Card */
+.about-card {
+  width: 420px;
+  padding: 40px 35px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.45);
+  animation: fadeIn 0.6s ease;
   text-align: center;
 }
 
+/* Title */
 .about-title {
-  font-size: 3.2rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #00ffff, #b026ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
-}
-
-.about-text {
-  color: #ccc;
-  font-size: 1.2rem;
-  max-width: 900px;
-  margin: 0 auto 40px auto;
-  line-height: 1.6;
-}
-
-.about-cards {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 35px;
-  margin-top: 20px;
-}
-
-.about-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 20px rgba(176, 38, 255, 0.25);
-  width: 380px;
-  min-height: 200px;
-  padding: 25px 30px;
-  border-radius: 18px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.about-card h3 {
-  font-size: 1.7rem;
+  font-size: 26px;
+  font-weight: 600;
+  color: white;
   margin-bottom: 12px;
-  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
-.about-card p {
-  font-size: 1.05rem;
-  line-height: 1.5;
-  color: #d1d1d1;
+/* Description text */
+.about-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #e5e5e5;
+  margin-bottom: 28px;
+  padding: 0 4px;
 }
 
-/* Vision color */
-.about-card.vision h3 {
-  color: #00ffff;
+/* Back Button */
+.back-btn {
+  background: transparent;
+  padding: 10px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ececec;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
 
-/* Mission color */
-.about-card.mission h3 {
-  color: #b026ff;
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
