@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -9,40 +8,49 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login submitted:", email, password);
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-card">
-        <h2 className="login-title">Login to <span>SynapSee</span></h2>
-        <p className="login-subtitle">Access your intelligent vision dashboard</p>
+    <div className="h-screen flex justify-center items-center bg-transparent pt-20 px-4">
+      <div className="w-full max-w-md glass-card p-8 rounded-2xl text-center">
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <h2 className="text-white text-3xl font-semibold mb-2">
+          Login to <span className="text-cyan-300">SynapSee</span>
+        </h2>
+
+        <p className="text-gray-300 text-sm mb-8">
+          Access your intelligent vision dashboard
+        </p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <input
             type="email"
             placeholder="Email address"
+            className="input-box"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
-            className="login-input"
           />
 
           <input
             type="password"
             placeholder="Password"
+            className="input-box"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
-            className="login-input"
           />
 
-          <button type="submit" className="login-btn">
+          <button
+            type="submit"
+            className="login-btn"
+          >
             Login
           </button>
         </form>
 
-        <button className="back-btn" onClick={() => navigate("/")}>
+        <button
+          onClick={() => navigate("/")}
+          className="mt-6 border border-white/25 text-white px-5 py-2 rounded-xl hover:bg-white/20 transition"
+        >
           ← Back to Home
         </button>
       </div>
