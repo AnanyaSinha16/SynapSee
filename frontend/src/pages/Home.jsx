@@ -1,34 +1,33 @@
-import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 export default function Home() {
-  const navigate = useNavigate();
-
   return (
     <div className="home-container">
 
-      {/* Floating Background Orbs */}
-      <div className="orb orb1"></div>
-      <div className="orb orb2"></div>
-      <div className="orb orb3"></div>
+      {/* Gradient Title */}
+      <h1 className="home-title">Welcome to SynapSee</h1>
 
-      {/* Main Card */}
-      <div className="synapsee-card">
-        <h1 className="title-gradient">Welcome to SynapSee</h1>
+      {/* Subtitle */}
+      <p className="home-subtitle">
+        Your intelligent vision companion — where AI meets simplicity.
+      </p>
 
-        <p className="subtitle">
-          Your intelligent vision companion — where AI meets simplicity.
-        </p>
-
-        <div className="button-group">
-          <button className="synapsee-btn" onClick={() => navigate("/about")}>
-            About
-          </button>
-          <button className="synapsee-btn" onClick={() => navigate("/login")}>
-            Login
-          </button>
+      {/* Info Cards */}
+      <div className="home-cards">
+        
+        <div className="home-card">
+          <h3 className="card-title cyan">Recent Activity</h3>
+          <p className="card-text">View your recent OCR scans and AI responses here.</p>
         </div>
-      </div>
 
+        <div className="home-card">
+          <h3 className="card-title magenta">Quick Start</h3>
+          <p className="card-text">
+            Capture, extract, and understand — all from your dashboard.
+          </p>
+        </div>
+
+      </div>
     </div>
   );
 }
