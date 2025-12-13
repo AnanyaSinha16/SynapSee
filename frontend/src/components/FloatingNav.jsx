@@ -9,6 +9,7 @@ export default function FloatingNav() {
       <button onClick={() => navigate("/")}>Home</button>
       <button onClick={() => navigate("/about")}>About</button>
       <button onClick={() => navigate("/login")}>Login</button>
+      <button onClick={() => navigate("/signup")}>Signup</button>
     </div>
   );
 }
