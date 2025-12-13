@@ -8,9 +8,7 @@ export default function About() {
     <div className="about-container">
       <div className="about-card">
 
-        <h2 className="about-title">
-          About SynapSee ✨
-        </h2>
+        <h2 className="about-title">About SynapSee ✨</h2>
 
         <p className="about-text">
           SynapSee is an intelligent AI-powered vision platform designed to simplify

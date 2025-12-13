@@ -4,7 +4,6 @@
   color: white;
 }
 
-/* Gradient Title */
 .home-title {
   font-size: 60px;
   font-weight: 800;
@@ -14,21 +13,18 @@
   margin-bottom: 10px;
 }
 
-/* Subtitle */
 .home-subtitle {
   font-size: 20px;
   color: #d8d8d8;
   margin-bottom: 60px;
 }
 
-/* Cards Layout */
 .home-cards {
   display: flex;
   justify-content: center;
   gap: 40px;
 }
 
-/* Glass Cards */
 .home-card {
   width: 330px;
   padding: 28px 30px;
@@ -46,7 +42,6 @@
   box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* Titles */
 .card-title {
   font-size: 22px;
   font-weight: 700;
@@ -61,7 +56,6 @@
   color: #d14bff;
 }
 
-/* Card Text */
 .card-text {
   font-size: 15px;
   color: #dfdfdf;
