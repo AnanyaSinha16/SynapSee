@@ -45,3 +45,13 @@
   font-size: 13px;
   opacity: 0.8;
 }
+.footer {
+  color: #d4af37;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+  text-shadow: 
+    0 0 5px rgba(212, 175, 55, 0.6),
+    0 0 10px rgba(212, 175, 55, 0.4);
+}
+

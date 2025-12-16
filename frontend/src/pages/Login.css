@@ -63,3 +63,14 @@
   border-radius: 10px;
   cursor: pointer;
 }
+
+.signup-link {
+  margin-top: 12px;
+  color: #5feaff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
