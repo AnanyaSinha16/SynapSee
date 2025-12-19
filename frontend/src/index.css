@@ -1,5 +1,5 @@
 /* =========================
-   GLOBAL RESET
+   GLOBAL
 ========================= */
 * {
   margin: 0;
@@ -8,6 +8,7 @@
 }
 
 body {
+  min-height: 100vh;
   background: radial-gradient(
     circle at top,
     #2a004f,
@@ -16,7 +17,6 @@ body {
   );
   font-family: "Poppins", sans-serif;
   color: #ffffff;
-  min-height: 100vh;
 }
 
 /* =========================
@@ -24,13 +24,59 @@ body {
 ========================= */
 .dashboard-container {
   min-height: 100vh;
+  padding-top: 140px; /* space below navbar */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
 /* =========================
-   CARD ROW
+   WELCOME SECTION
+========================= */
+.welcome-section {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.welcome-title {
+  font-size: 3.4rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.welcome-title span {
+  background: linear-gradient(
+    90deg,
+    #ffd700,
+    #ffea70,
+    #ffb347
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 14px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 200, 80, 0.45),
+    0 0 55px rgba(255, 170, 0, 0.25);
+
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.25); }
+  100% { filter: brightness(1); }
+}
+
+.welcome-subtitle {
+  font-size: 1.15rem;
+  color: #e6ddff;
+  opacity: 0.9;
+}
+
+/* =========================
+   DASHBOARD CARDS
 ========================= */
 .card-row {
   display: flex;
@@ -41,7 +87,7 @@ body {
    GLASS CARD
 ========================= */
 .glass-card {
-  width: 380px;              /* bigger size */
+  width: 380px;
   min-height: 220px;
   padding: 30px;
   border-radius: 22px;
@@ -59,18 +105,15 @@ body {
   transition: all 0.35s ease;
 }
 
-/* =========================
-   HOVER EFFECT
-========================= */
 .glass-card:hover {
   transform: translateY(-12px) scale(1.04);
   box-shadow:
-    0 0 60px rgba(155, 77, 255, 0.4),
+    0 0 65px rgba(155, 77, 255, 0.45),
     inset 0 0 25px rgba(255, 255, 255, 0.08);
 }
 
 /* =========================
-   TITLES
+   CARD TEXT
 ========================= */
 .card-title {
   font-size: 1.7rem;
@@ -88,9 +131,6 @@ body {
   text-shadow: 0 0 14px rgba(217, 76, 255, 0.6);
 }
 
-/* =========================
-   TEXT
-========================= */
 .card-text {
   font-size: 1.05rem;
   line-height: 1.7;
@@ -98,7 +138,7 @@ body {
 }
 
 /* =========================
-   RESPONSIVE (MOBILE)
+   RESPONSIVE
 ========================= */
 @media (max-width: 900px) {
   .card-row {
@@ -109,5 +149,9 @@ body {
   .glass-card {
     width: 90%;
     max-width: 420px;
+  }
+
+  .welcome-title {
+    font-size: 2.6rem;
   }
 }
