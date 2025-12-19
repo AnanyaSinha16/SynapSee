@@ -1,6 +1,16 @@
 export default function Home() {
   return (
     <div className="dashboard-container">
+
+      {/* ===== Welcome Section ===== */}
+      <div className="welcome-section">
+        <h1 className="welcome-title">Welcome to <span>SynapSee</span></h1>
+        <p className="welcome-subtitle">
+          Your intelligent vision companion — where AI meets simplicity.
+        </p>
+      </div>
+
+      {/* ===== Cards ===== */}
       <div className="card-row">
 
         <div className="glass-card">
