@@ -1,84 +1,113 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ===========================================
-   PERFECT SYNAPSEE BACKGROUND (MATCHES IMAGE)
-   =========================================== */
-
-body {
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
   margin: 0;
   padding: 0;
-  color: white;
-  font-family: "Inter", sans-serif;
-  overflow-x: hidden;
+  box-sizing: border-box;
+}
 
+body {
   background: radial-gradient(
-      circle at top center,
-      rgba(90, 0, 150, 0.25),
-      rgba(20, 0, 40, 1) 60%
-    ),
-    linear-gradient(
-      180deg,
-      #0a0017 0%,
-      #090016 40%,
-      #060013 100%
-    );
-
-  background-attachment: fixed;
+    circle at top,
+    #2a004f,
+    #120018,
+    #08000d
+  );
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  min-height: 100vh;
 }
 
-/* ===========================================
-   GRADIENT TITLE TEXT
-   =========================================== */
-
-.title-gradient {
-  font-size: 72px;
-  font-weight: 800;
-  text-align: center;
-  background: linear-gradient(90deg, #00eaff, #8b00ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Subtitle */
-.subtitle {
-  text-align: center;
-  font-size: 20px;
-  color: #d4c8ff;
-  opacity: 0.85;
-  margin-top: -10px;
-  margin-bottom: 50px;
-}
-
-/* ===========================================
-   GLASS CARD COMPONENTS
-   =========================================== */
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 18px;
-  padding: 28px;
-  width: 360px;
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 20px rgba(120, 0, 255, 0.15);
-  transition: 0.25s ease;
-}
-
-.glass-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 30px rgba(150, 0, 255, 0.30);
-}
-
-/* ===========================================
-   CARD ROW
-   =========================================== */
-.card-row {
+/* =========================
+   MAIN CONTAINER
+========================= */
+.dashboard-container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   CARD ROW
+========================= */
+.card-row {
+  display: flex;
   gap: 40px;
-  width: 100%;
-  margin-top: 20px;
-  padding-bottom: 80px;
+}
+
+/* =========================
+   GLASS CARD
+========================= */
+.glass-card {
+  width: 380px;              /* bigger size */
+  min-height: 220px;
+  padding: 30px;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 0 45px rgba(155, 77, 255, 0.18),
+    inset 0 0 18px rgba(255, 255, 255, 0.04);
+
+  transition: all 0.35s ease;
+}
+
+/* =========================
+   HOVER EFFECT
+========================= */
+.glass-card:hover {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow:
+    0 0 60px rgba(155, 77, 255, 0.4),
+    inset 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   TITLES
+========================= */
+.card-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.card-title.blue {
+  color: #00eaff;
+  text-shadow: 0 0 14px rgba(0, 234, 255, 0.6);
+}
+
+.card-title.purple {
+  color: #d94cff;
+  text-shadow: 0 0 14px rgba(217, 76, 255, 0.6);
+}
+
+/* =========================
+   TEXT
+========================= */
+.card-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e6e6f0;
+}
+
+/* =========================
+   RESPONSIVE (MOBILE)
+========================= */
+@media (max-width: 900px) {
+  .card-row {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .glass-card {
+    width: 90%;
+    max-width: 420px;
+  }
 }
