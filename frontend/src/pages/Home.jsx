@@ -4,15 +4,16 @@ export default function Home() {
 
       {/* ===== Welcome Section ===== */}
       <div className="welcome-section">
-        <h1 className="welcome-title">Welcome to <span>SynapSee</span></h1>
+        <h1 className="welcome-title">
+          Welcome to <span>SynapSee</span>
+        </h1>
         <p className="welcome-subtitle">
           Your intelligent vision companion — where AI meets simplicity.
         </p>
       </div>
 
-      {/* ===== Cards ===== */}
+      {/* ===== Dashboard Cards ===== */}
       <div className="card-row">
-
         <div className="glass-card">
           <h2 className="card-title blue">Recent Activity</h2>
           <p className="card-text">
@@ -26,8 +27,8 @@ export default function Home() {
             Capture, extract, and understand — all from your dashboard.
           </p>
         </div>
-
       </div>
+
     </div>
   );
 }
