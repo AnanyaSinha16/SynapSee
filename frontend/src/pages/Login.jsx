@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { initGoogleLogin } from "../googleOneTap";
-import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
 
@@ -9,20 +8,19 @@ export default function Login() {
   }, []);
 
   function handleGoogleResponse(response) {
-    console.log("Google response:", response);
+    console.log("FULL GOOGLE RESPONSE:", response);
 
-    const decoded = jwtDecode(response.credential);
-    console.log("Decoded user:", decoded);
+    // ✅ Save raw token (for testing)
+    localStorage.setItem("token", response.credential);
 
-    localStorage.setItem("user", JSON.stringify(decoded));
-
+    alert("Google login success ✅");
     window.location.href = "/";
   }
 
   return (
     <div style={{ paddingTop: "150px", textAlign: "center" }}>
       <h2>Login</h2>
-      <p>Use your Google account to continue</p>
+      <p>Use your Google account</p>
     </div>
   );
 }
