@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { initGoogleLogin } from "../googleOneTap";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
 
@@ -12,13 +12,10 @@ export default function Login() {
     console.log("Google response:", response);
 
     const decoded = jwtDecode(response.credential);
+    console.log("Decoded user:", decoded);
 
-    console.log("User info:", decoded);
-
-    // ✅ Save login
     localStorage.setItem("user", JSON.stringify(decoded));
 
-    // ✅ Redirect
     window.location.href = "/";
   }
 
