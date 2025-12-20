@@ -1,54 +1,51 @@
 /* =========================
-   ABOUT PAGE CONTAINER
+   GLOBAL
 ========================= */
-.about-container {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   min-height: 100vh;
+  background: radial-gradient(
+    circle at top,
+    #2a004f,
+    #120018,
+    #08000d
+  );
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.dashboard-container {
+  min-height: 100vh;
+  padding-top: 140px; /* space below navbar */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
 /* =========================
-   ABOUT CARD (BIGGER + PREMIUM)
+   WELCOME SECTION
 ========================= */
-.about-card {
-  width: 520px;              /* increased size */
-  max-width: 90%;
-  padding: 50px 44px;
-  border-radius: 26px;
-
-  background: rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
-  box-shadow:
-    0 0 55px rgba(155, 77, 255, 0.28),
-    inset 0 0 25px rgba(255, 255, 255, 0.05);
-
+.welcome-section {
   text-align: center;
-  transition: all 0.4s ease;
+  margin-bottom: 70px;
 }
 
-.about-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow:
-    0 0 75px rgba(155, 77, 255, 0.45),
-    inset 0 0 30px rgba(255, 255, 255, 0.08);
-}
-
-/* =========================
-   TITLE
-========================= */
-.about-title {
-  font-size: 2.8rem;
+.welcome-title {
+  font-size: 3.4rem;
   font-weight: 800;
-  margin-bottom: 22px;
-  color: #ffffff;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
 }
 
-.about-title span {
+.welcome-title span {
   background: linear-gradient(
     90deg,
     #ffd700,
@@ -60,45 +57,101 @@
 
   text-shadow:
     0 0 14px rgba(255, 215, 0, 0.6),
-    0 0 30px rgba(255, 200, 80, 0.4);
+    0 0 30px rgba(255, 200, 80, 0.45),
+    0 0 55px rgba(255, 170, 0, 0.25);
+
+  animation: sparkle 3s ease-in-out infinite;
 }
 
-/* =========================
-   TEXT
-========================= */
-.about-text {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #ece8ff;
-  margin-bottom: 18px;
+@keyframes sparkle {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.25); }
+  100% { filter: brightness(1); }
 }
 
-.about-text.secondary {
-  font-size: 1.02rem;
-  color: #d7cff5;
+.welcome-subtitle {
+  font-size: 1.15rem;
+  color: #e6ddff;
   opacity: 0.9;
 }
 
 /* =========================
-   BUTTON
+   DASHBOARD CARDS
 ========================= */
-.about-btn {
-  margin-top: 30px;
-  padding: 12px 30px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  font-size: 0.95rem;
-  cursor: pointer;
-
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+.card-row {
+  display: flex;
+  gap: 40px;
 }
 
-.about-btn:hover {
-  background: linear-gradient(90deg, #ffd700, #ffb347);
-  color: #1a002b;
-  box-shadow: 0 0 25px rgba(255, 200, 80, 0.6);
+/* =========================
+   GLASS CARD
+========================= */
+.glass-card {
+  width: 380px;
+  min-height: 220px;
+  padding: 30px;
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 0 45px rgba(155, 77, 255, 0.18),
+    inset 0 0 18px rgba(255, 255, 255, 0.04);
+
+  transition: all 0.35s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-12px) scale(1.04);
+  box-shadow:
+    0 0 65px rgba(155, 77, 255, 0.45),
+    inset 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   CARD TEXT
+========================= */
+.card-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.card-title.blue {
+  color: #00eaff;
+  text-shadow: 0 0 14px rgba(0, 234, 255, 0.6);
+}
+
+.card-title.purple {
+  color: #d94cff;
+  text-shadow: 0 0 14px rgba(217, 76, 255, 0.6);
+}
+
+.card-text {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #e6e6f0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .card-row {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .glass-card {
+    width: 90%;
+    max-width: 420px;
+  }
+
+  .welcome-title {
+    font-size: 2.6rem;
+  }
 }
