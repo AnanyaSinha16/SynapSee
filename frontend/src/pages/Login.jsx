@@ -1,22 +1,31 @@
 import { useEffect } from "react";
-import { initializeGoogleOneTap } from "../googleOneTap";
-import { useNavigate } from "react-router-dom";
+import { initGoogleLogin } from "../googleOneTap";
+import jwtDecode from "jwt-decode";
 
 export default function Login() {
-  const navigate = useNavigate();
 
   useEffect(() => {
-    initializeGoogleOneTap((response) => {
-      console.log("Google One Tap Response:", response);
-
-      // Normally you verify token on backend, but here:
-      navigate("/");
-    });
+    initGoogleLogin(handleGoogleResponse);
   }, []);
 
+  function handleGoogleResponse(response) {
+    console.log("Google response:", response);
+
+    const decoded = jwtDecode(response.credential);
+
+    console.log("User info:", decoded);
+
+    // ✅ Save login
+    localStorage.setItem("user", JSON.stringify(decoded));
+
+    // ✅ Redirect
+    window.location.href = "/";
+  }
+
   return (
-    <div className="login-container">
-      {/* your login UI remains exactly the same */}
+    <div style={{ paddingTop: "150px", textAlign: "center" }}>
+      <h2>Login</h2>
+      <p>Use your Google account to continue</p>
     </div>
   );
 }
